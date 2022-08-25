@@ -10,7 +10,7 @@ function App() {
 	const [stream, setStream] = useState(null);
 	const remoteVideoRef = useRef(null);
 	const peerInstance = useRef(null);
-	const [myCursorLoc, setMyCursorLoc] = useState([0, 0]);
+	const [myCursorLoc, setMyCursorLoc] = useState();
 	const [cursorRemotePeerId, setCursorRemotePeerId] = useState();
 	const [cursorConn, setCursorConn] = useState();
 
@@ -78,12 +78,13 @@ function App() {
 			conn.on("open", () => {
 				console.log("Successfully connected to peer cursor backend");
 			});
+			return conn;
 		});
 	};
 
 	useEffect(() => {
 		if (cursorConn) {
-			console.send("Sent data to peer cursor backend!");
+			console.log("Sent data to peer cursor backend!");
 			cursorConn.send({
 				user: peerId, // todo: need a better id
 				data: {

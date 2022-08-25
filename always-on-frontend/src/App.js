@@ -11,7 +11,7 @@ function App() {
 	const remoteVideoRef = useRef(null);
 	const peerInstance = useRef(null);
 	const [myCursorLoc, setMyCursorLoc] = useState();
-	const [cursorRemotePeerId, setCursorRemotePeerId] = useState();
+	const [remotePeerCursorIdValue, setRemotePeerCursorIdValue] = useState();
 	const [cursorConn, setCursorConn] = useState();
 
 	const getStream = async (screenId) => {
@@ -51,7 +51,6 @@ function App() {
 		});
 
 		peer.on("call", async (call) => {
-			console.log("Streaming");
 			call.answer(stream);
 		});
 
@@ -102,7 +101,15 @@ function App() {
 				value={remotePeerIdValue}
 				onChange={(e) => setRemotePeerIdValue(e.target.value)}
 			/>
-			<button onClick={() => call(remotePeerIdValue)}>Connect</button>
+			<button onClick={() => call(remotePeerIdValue)}>Connect (Video)</button>
+			<input
+				type="text"
+				value={remotePeerCursorIdValue}
+				onChange={(e) => setRemotePeerCursorIdValue(e.target.value)}
+			/>
+			<button onClick={() => connect(remotePeerCursorIdValue)}>
+				Connect (Cursor)
+			</button>
 			<div>
 				<video
 					onMouseMove={(event) =>

@@ -74,7 +74,7 @@ const createWindow = () => {
 			});
 	});
 
-	mainWindow.webContents.openDevTools();
+	//mainWindow.webContents.openDevTools();
 
 	overlayWindow = new BrowserWindow({
 		frame: false,

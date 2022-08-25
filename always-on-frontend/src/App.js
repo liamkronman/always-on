@@ -10,8 +10,9 @@ function App() {
 	const [stream, setStream] = useState(null);
 	const remoteVideoRef = useRef(null);
 	const peerInstance = useRef(null);
+	const peerInstanceCursor = useRef(null);
 	const [myCursorLoc, setMyCursorLoc] = useState();
-	const [remotePeerCursorIdValue, setRemotePeerCursorIdValue] = useState();
+	const [remotePeerCursorIdValue, setRemotePeerCursorIdValue] = useState("");
 	const [cursorConn, setCursorConn] = useState();
 
 	const getStream = async (screenId) => {
@@ -73,7 +74,7 @@ function App() {
 	const connect = async (remotePeerId) => {
 		console.log("Attempting to connect to peer cursor backend");
 		setCursorConn(() => {
-			const conn = peerInstance.current.connect(remotePeerId);
+			const conn = peerInstanceCursor.current.connect(remotePeerId);
 			conn.on("open", () => {
 				console.log("Successfully connected to peer cursor backend");
 			});
@@ -117,6 +118,9 @@ function App() {
 					}
 					onMouseLeave={(event) => setMyCursorLoc(undefined)}
 					ref={remoteVideoRef}
+					style={{
+						cursor: "none",
+					}}
 				/>
 			</div>
 			<PlayerCursor point={myCursorLoc} fillColor="rgb(100, 250, 50)">

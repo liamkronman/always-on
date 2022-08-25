@@ -6,5 +6,4 @@ contextBridge.exposeInMainWorld("electronAPI", {
 		ipcRenderer.removeAllListeners("SET_SOURCE_ID");
 		ipcRenderer.on("SET_SOURCE_ID", callback);
 	},
-	setCreateNewCursor: (callback) => ipcRenderer.on("createNewCursor", callback),
 });

@@ -74,14 +74,24 @@ function App() {
 		peerInstance.current = peer;
 	}, []);
 
-	const call = (remotePeerId) => {
+	const call = async (remotePeerId) => {
 		var getUserMedia =
 			navigator.getUserMedia ||
 			navigator.webkitGetUserMedia ||
 			navigator.mozGetUserMedia;
+		
+		const stream = await navigator.mediaDevices.getUserMedia({
+			audio: false,
+			video: {
+				mandatory: {
+					chromeMediaSource: "desktop",
+					chromeMediaSourceId: screenId,
+				},
+			},
+		});
 
 		getUserMedia({ video: true, audio: false }, (mediaStream) => {
-			const call = peerInstance.current.call(remotePeerId, mediaStream);
+			const call = peerInstance.current.call(remotePeerId, stream);
 
 			call.on("stream", (remoteStream) => {
 				remoteVideoRef.current.srcObject = remoteStream;

@@ -56,7 +56,17 @@ function App() {
 		});
 
 		peerInstance.current = peer;
-	}, [stream]);
+	}, []);
+
+	useEffect(() => {
+		const peer = new Peer();
+
+		peer.on("open", (id) => {
+			setPeerId(id);
+		});
+		
+		peerInstanceCursor.current = peer;
+	}, [])
 
 	const call = async (remotePeerId) => {
 		try {

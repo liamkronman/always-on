@@ -3,7 +3,7 @@ import { PerfectCursor } from "perfect-cursors";
 import { useEffect, useState } from "react";
 import "./Cursor.css";
 
-// Credit to Jacky Zhao: (https://github.com/jackyzha0/cursor-chat)
+// Credit to Jacky Zhao: (https://github.com/jackyzha0/cursor-chat) & Figma
 
 export const OtherPlayerCursor = (props) => {
 	const [pc, setPC] = useState();

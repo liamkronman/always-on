@@ -1,50 +1,53 @@
 // import logo from './logo.svg';
-import './App.css';
-import { useRef, useEffect } from 'react';
+import "./App.css";
+import { useRef, useEffect, useState } from "react";
+import { PlayerCursor } from "./Cursor";
 
 function App() {
-  const videoRef = useRef();
+	const videoRef = useRef();
+	const [cursors, setCursors] = useState([]);
 
-  const getStream = async (screenId) => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: false,
-        video: {
-          mandatory: {
-            chromeMediaSource: 'desktop',
-            chromeMediaSourceId: screenId,
-          }
-        }
-      })
+	const getStream = async (screenId) => {
+		try {
+			const stream = await navigator.mediaDevices.getUserMedia({
+				audio: false,
+				video: {
+					mandatory: {
+						chromeMediaSource: "desktop",
+						chromeMediaSourceId: screenId,
+					},
+				},
+			});
 
-      handleStream(stream)
-    } catch(e) {
-      console.log(e)
-    }
-  }
+			handleStream(stream);
+		} catch (e) {
+			console.log(e);
+		}
+	};
 
-  const handleStream = (stream) => {
-    let { width, height } = stream.getVideoTracks()[0].getSettings();
+	const handleStream = (stream) => {
+		let { width, height } = stream.getVideoTracks()[0].getSettings();
 
-    // window.electronAPI.setSize({ width, height });
+		// window.electronAPI.setSize({ width, height });
 
-    videoRef.current.srcObject = stream;
-    videoRef.current.onloadedmetadata = (e) => videoRef.current.play()
-  }
+		videoRef.current.srcObject = stream;
+		videoRef.current.onloadedmetadata = (e) => videoRef.current.play();
+	};
 
-  window.electronAPI.getScreenId((event, screenId) => {
-    console.log('Renderer...', screenId);
-    getStream(screenId);
-  });
+	window.electronAPI.getScreenId((event, screenId) => {
+		console.log("Renderer...", screenId);
+		getStream(screenId);
+	});
 
-  return (
-    <div className="App">
-      <>
-        <span>800 x 600</span>
-        <video ref={videoRef} className="video"></video>
-      </>
-    </div>
-  );
+	return (
+		<div className="App">
+			<>
+				<span>800 x 600</span>
+				<video ref={videoRef} className="video"></video>
+				<PlayerCursor />
+			</>
+		</div>
+	);
 }
 
 export default App;

@@ -1,5 +1,5 @@
 // import logo from './logo.svg';
-import './App.css';
+import "./App.css";
 import { useRef, useEffect, useState } from "react";
 import { PlayerCursor } from "./Cursor";
 import Peer from "peerjs";
@@ -10,7 +10,7 @@ function App() {
 	const [stream, setStream] = useState(null);
 	const remoteVideoRef = useRef(null);
 	const peerInstance = useRef(null);
-  const [cursors, setCursors] = useState([]);
+	const [myCursorLoc, setMyCursorLoc] = useState([0, 0]);
 
 	const getStream = async (screenId) => {
 		try {
@@ -33,8 +33,8 @@ function App() {
 	const handleStream = (stream) => {
 		let { width, height } = stream.getVideoTracks()[0].getSettings();
 
-    setStream(stream);
-  }
+		setStream(stream);
+	};
 
 	window.electronAPI.getScreenId((event, screenId) => {
 		console.log("Renderer...", screenId);
@@ -49,7 +49,6 @@ function App() {
 		});
 
 		peer.on("call", async (call) => {
-
 			console.log("Streaming");
 			call.answer(stream);
 		});
@@ -80,8 +79,18 @@ function App() {
 			/>
 			<button onClick={() => call(remotePeerIdValue)}>Call</button>
 			<div>
-				<video ref={remoteVideoRef} />
+				<video
+					style={{ border: "1px solid black" }}
+					onMouseMove={(event) =>
+						setMyCursorLoc([event.clientX, event.clientY])
+					}
+					onMouseLeave={(event) => setMyCursorLoc(undefined)}
+					ref={remoteVideoRef}
+				/>
 			</div>
+			<PlayerCursor point={myCursorLoc} fillColor="rgb(100, 250, 50)">
+				Text
+			</PlayerCursor>
 		</div>
 	);
 }

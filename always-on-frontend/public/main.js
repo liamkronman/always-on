@@ -5,11 +5,11 @@ const {
 	ipcMain,
 	Menu,
 } = require("electron");
-const PerfectCursor = require("perfect-cursors");
 const path = require("path");
 
 let availableScreens;
 let mainWindow;
+let overlayWindow;
 
 const sendSelectedScreen = (item) => {
 	mainWindow.webContents.send("SET_SOURCE_ID", item.id);
@@ -75,6 +75,25 @@ const createWindow = () => {
 	});
 
 	mainWindow.webContents.openDevTools();
+
+	overlayWindow = new BrowserWindow({
+		frame: false,
+		autoHideMenuBar: true,
+		webPreferences: {
+			preload: path.join(__dirname, "preload.js"),
+			nodeIntegration: true,
+		},
+		transparent: true,
+		alwaysOnTop: true,
+	});
+	overlayWindow.maximize();
+	overlayWindow.setIgnoreMouseEvents(true);
+	// ^^ will cause issues; we only want to ignore lcicks
+
+	overlayWindow.loadURL("http://localhost:4000/overlay");
+
+	// Open the DevTools.
+	//overlayWindow.webContents.openDevTools();
 };
 
 app.on("ready", () => {

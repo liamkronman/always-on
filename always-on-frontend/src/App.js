@@ -101,7 +101,7 @@ function App() {
 				value={remotePeerIdValue}
 				onChange={(e) => setRemotePeerIdValue(e.target.value)}
 			/>
-			<button onClick={() => call(remotePeerIdValue)}>Call</button>
+			<button onClick={() => connect(remotePeerIdValue)}>Connect</button>
 			<div>
 				<video
 					onMouseMove={(event) =>

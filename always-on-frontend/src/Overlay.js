@@ -24,8 +24,10 @@ function Overlay() {
 			conn.on("data", (data) => {
 				console.log("Received data", data);
 				setOtherCursors((prev) => {
-					prev[data.user] = { ...prev[data.user], ...data.data };
-					return prev;
+					let new_map = new Map(prev);
+					new_map[data.user] = { ...prev[data.user], ...data.data };
+					console.log("New combined data is", new_map);
+					return new_map;
 				});
 			});
 		});
@@ -41,6 +43,7 @@ function Overlay() {
 		>
 			{Object.entries(otherCursors).forEach((key, val) => {
 				const { content, ...rest } = val;
+				console.log("Building cursor Information", content, rest, val);
 				return <PlayerCursor {...rest}>content</PlayerCursor>;
 			})}
 		</div>

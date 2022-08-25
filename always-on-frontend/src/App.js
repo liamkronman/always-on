@@ -1,8 +1,25 @@
 // import logo from './logo.svg';
 import './App.css';
+import { Peer } from 'peerjs';
 import { useRef, useEffect } from 'react';
 
 function App() {
+  const peer = new Peer('liam-always-on');
+
+  const conn = peer.connect("siyong-always-on");
+  conn.on("open", () => {
+    conn.send("hi!");
+  });
+
+  peer.on("connection", (conn) => {
+    conn.on("data", (data) => {
+      console.log(data);
+    })
+    conn.on("open", () => {
+      conn.send("hello!");
+    })
+  })
+
   const videoRef = useRef();
 
   const getStream = async (screenId) => {

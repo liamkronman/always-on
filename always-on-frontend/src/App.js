@@ -11,6 +11,8 @@ function App() {
 	const remoteVideoRef = useRef(null);
 	const peerInstance = useRef(null);
 	const [myCursorLoc, setMyCursorLoc] = useState([0, 0]);
+	const [cursorRemotePeerId, setCursorRemotePeerId] = useState();
+	const [cursorConn, setCursorConn] = useState();
 
 	const getStream = async (screenId) => {
 		try {
@@ -69,6 +71,28 @@ function App() {
 		}
 	};
 
+	const connect = async (remotePeerId) => {
+		console.log("Attempting to connect to peer cursor backend");
+		setCursorConn(() => {
+			const conn = peerInstance.current.connect(remotePeerId);
+			conn.on("open", () => {
+				console.log("Successfully connected to peer cursor backend");
+			});
+		});
+	};
+
+	useEffect(() => {
+		if (cursorConn) {
+			console.send("Sent data to peer cursor backend!");
+			cursorConn.send({
+				user: peerId, // todo: need a better id
+				data: {
+					point: myCursorLoc,
+				},
+			});
+		}
+	}, [peerId, cursorConn, myCursorLoc]);
+
 	return (
 		<div className="App">
 			<h1>Current user id is {peerId}</h1>
@@ -80,7 +104,6 @@ function App() {
 			<button onClick={() => call(remotePeerIdValue)}>Call</button>
 			<div>
 				<video
-					style={{ border: "1px solid black" }}
 					onMouseMove={(event) =>
 						setMyCursorLoc([event.clientX, event.clientY])
 					}

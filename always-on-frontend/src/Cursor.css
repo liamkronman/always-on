@@ -18,6 +18,12 @@ html {
 }
 
   .playercursor p {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
     transform: translatey(0px);
     animation: float 5s ease-in-out infinite;
     mix-blend-mode: multiply;

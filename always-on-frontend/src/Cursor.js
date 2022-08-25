@@ -1,3 +1,4 @@
+import Peer from "peerjs";
 import { PerfectCursor } from "perfect-cursors";
 import { useEffect, useState } from "react";
 import "./Cursor.css";
@@ -6,7 +7,7 @@ import "./Cursor.css";
 
 export const OtherPlayerCursor = (props) => {
 	const [pc, setPC] = useState();
-	const [point, setPoint] = useState([0, 0]);
+	const [point, setPoint] = useState();
 
 	useEffect(
 		() =>

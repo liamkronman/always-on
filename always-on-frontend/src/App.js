@@ -6,8 +6,10 @@ function App() {
 	const [peerId, setPeerId] = useState("");
 	const [remotePeerIdValue, setRemotePeerIdValue] = useState("");
 	const [screenId, setScreenId] = useState(null);
+	const [stream, setStream] = useState(null);
 	const remoteVideoRef = useRef(null);
 	const peerInstance = useRef(null);
+	const videoRef = useRef();
 
 	const getStream = async (screenId) => {
 		try {
@@ -30,13 +32,14 @@ function App() {
 	const handleStream = (stream) => {
 		let { width, height } = stream.getVideoTracks()[0].getSettings();
 
-		// videoRef.current.srcObject = stream;
-		// videoRef.current.onloadedmetadata = (e) => videoRef.current.play();
+		videoRef.current.srcObject = stream;
+		videoRef.current.onloadedmetadata = (e) => videoRef.current.play();
+		setStream(stream);
 	};
 
 	window.electronAPI.getScreenId((event, screenId) => {
 		console.log("Renderer...", screenId);
-		setScreenId(screenId);
+		getStream(screenId);
 	});
 
 	useEffect(() => {
@@ -52,16 +55,7 @@ function App() {
 			// 	navigator.webkitGetUserMedia ||
 			// 	navigator.mozGetUserMedia;
 
-			const stream = await navigator.mediaDevices.getUserMedia({
-				audio: false,
-				video: {
-					mandatory: {
-						chromeMediaSource: "desktop",
-						chromeMediaSourceId: screenId,
-					},
-				},
-			});
-
+			console.log("Streaming");
 			call.answer(stream);
 
 			// getUserMedia({ video: true, audio: false }, (mediaStream) => {
@@ -74,30 +68,24 @@ function App() {
 		});
 
 		peerInstance.current = peer;
-	}, []);
+	}, [stream]);
 
 	const call = async (remotePeerId) => {
 		// var getUserMedia =
 		// 	navigator.getUserMedia ||
 		// 	navigator.webkitGetUserMedia ||
 		// 	navigator.mozGetUserMedia;
-		
-		const stream = await navigator.mediaDevices.getUserMedia({
-			audio: false,
-			video: {
-				mandatory: {
-					chromeMediaSource: "desktop",
-					chromeMediaSourceId: screenId,
-				},
-			},
-		});
 
-		const call = peerInstance.current.call(remotePeerId, stream);
+		try {
+			const call = peerInstance.current.call(remotePeerId, stream);
 
-		call.on("stream", (remoteStream) => {
-			remoteVideoRef.current.srcObject = remoteStream;
-			remoteVideoRef.current.play();
-		});
+			call.on("stream", (remoteStream) => {
+				remoteVideoRef.current.srcObject = remoteStream;
+				remoteVideoRef.current.play();
+			});
+		} catch (e) {
+			console.log(e);
+		}
 
 		// getUserMedia({ video: true, audio: false }, (mediaStream) => {
 		// 	const call = peerInstance.current.call(remotePeerId, stream);
@@ -118,6 +106,9 @@ function App() {
 				onChange={(e) => setRemotePeerIdValue(e.target.value)}
 			/>
 			<button onClick={() => call(remotePeerIdValue)}>Call</button>
+			<div>
+				<video ref={videoRef} />
+			</div>
 			<div>
 				<video ref={remoteVideoRef} />
 			</div>

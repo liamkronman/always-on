@@ -5,9 +5,39 @@ import "./App.css";
 function App() {
 	const [peerId, setPeerId] = useState("");
 	const [remotePeerIdValue, setRemotePeerIdValue] = useState("");
+	const [screenId, setScreenId] = useState(null);
 	const remoteVideoRef = useRef(null);
-	const currentUserVideoRef = useRef(null);
 	const peerInstance = useRef(null);
+
+	const getStream = async (screenId) => {
+		try {
+			const stream = await navigator.mediaDevices.getUserMedia({
+				audio: false,
+				video: {
+					mandatory: {
+						chromeMediaSource: "desktop",
+						chromeMediaSourceId: screenId,
+					},
+				},
+			});
+
+			handleStream(stream);
+		} catch (e) {
+			console.log(e);
+		}
+	};
+
+	const handleStream = (stream) => {
+		let { width, height } = stream.getVideoTracks()[0].getSettings();
+
+		// videoRef.current.srcObject = stream;
+		// videoRef.current.onloadedmetadata = (e) => videoRef.current.play();
+	};
+
+	window.electronAPI.getScreenId((event, screenId) => {
+		console.log("Renderer...", screenId);
+		setScreenId(screenId);
+	});
 
 	useEffect(() => {
 		const peer = new Peer();
@@ -16,20 +46,28 @@ function App() {
 			setPeerId(id);
 		});
 
-		peer.on("call", (call) => {
+		peer.on("call", async (call) => {
 			var getUserMedia =
 				navigator.getUserMedia ||
 				navigator.webkitGetUserMedia ||
 				navigator.mozGetUserMedia;
 
-			getUserMedia({ video: true, audio: true }, (mediaStream) => {
-				currentUserVideoRef.current.srcObject = mediaStream;
-				currentUserVideoRef.current.play();
-				call.answer(mediaStream);
-				call.on("stream", function (remoteStream) {
-					remoteVideoRef.current.srcObject = remoteStream;
-					remoteVideoRef.current.play();
-				});
+			const stream = await navigator.mediaDevices.getUserMedia({
+				audio: false,
+				video: {
+					mandatory: {
+						chromeMediaSource: "desktop",
+						chromeMediaSourceId: screenId,
+					},
+				},
+			});
+
+			getUserMedia({ video: true, audio: false }, (mediaStream) => {
+				call.answer(stream);
+				// call.on("stream", function (remoteStream) {
+				// 	remoteVideoRef.current.srcObject = remoteStream;
+				// 	remoteVideoRef.current.play();
+				// });
 			});
 		});
 
@@ -42,10 +80,7 @@ function App() {
 			navigator.webkitGetUserMedia ||
 			navigator.mozGetUserMedia;
 
-		getUserMedia({ video: true, audio: true }, (mediaStream) => {
-			currentUserVideoRef.current.srcObject = mediaStream;
-			currentUserVideoRef.current.play();
-
+		getUserMedia({ video: true, audio: false }, (mediaStream) => {
 			const call = peerInstance.current.call(remotePeerId, mediaStream);
 
 			call.on("stream", (remoteStream) => {
@@ -64,9 +99,6 @@ function App() {
 				onChange={(e) => setRemotePeerIdValue(e.target.value)}
 			/>
 			<button onClick={() => call(remotePeerIdValue)}>Call</button>
-			<div>
-				<video ref={currentUserVideoRef} />
-			</div>
 			<div>
 				<video ref={remoteVideoRef} />
 			</div>

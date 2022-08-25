@@ -5,11 +5,9 @@ import "./App.css";
 function App() {
 	const [peerId, setPeerId] = useState("");
 	const [remotePeerIdValue, setRemotePeerIdValue] = useState("");
-	const [screenId, setScreenId] = useState(null);
 	const [stream, setStream] = useState(null);
 	const remoteVideoRef = useRef(null);
 	const peerInstance = useRef(null);
-	const videoRef = useRef();
 
 	const getStream = async (screenId) => {
 		try {
@@ -32,8 +30,6 @@ function App() {
 	const handleStream = (stream) => {
 		let { width, height } = stream.getVideoTracks()[0].getSettings();
 
-		videoRef.current.srcObject = stream;
-		videoRef.current.onloadedmetadata = (e) => videoRef.current.play();
 		setStream(stream);
 	};
 
@@ -106,9 +102,6 @@ function App() {
 				onChange={(e) => setRemotePeerIdValue(e.target.value)}
 			/>
 			<button onClick={() => call(remotePeerIdValue)}>Call</button>
-			<div>
-				<video ref={videoRef} />
-			</div>
 			<div>
 				<video ref={remoteVideoRef} />
 			</div>

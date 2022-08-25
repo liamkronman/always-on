@@ -47,10 +47,10 @@ function App() {
 		});
 
 		peer.on("call", async (call) => {
-			var getUserMedia =
-				navigator.getUserMedia ||
-				navigator.webkitGetUserMedia ||
-				navigator.mozGetUserMedia;
+			// var getUserMedia =
+			// 	navigator.getUserMedia ||
+			// 	navigator.webkitGetUserMedia ||
+			// 	navigator.mozGetUserMedia;
 
 			const stream = await navigator.mediaDevices.getUserMedia({
 				audio: false,
@@ -62,23 +62,25 @@ function App() {
 				},
 			});
 
-			getUserMedia({ video: true, audio: false }, (mediaStream) => {
-				call.answer(stream);
-				// call.on("stream", function (remoteStream) {
-				// 	remoteVideoRef.current.srcObject = remoteStream;
-				// 	remoteVideoRef.current.play();
-				// });
-			});
+			call.answer(stream);
+
+			// getUserMedia({ video: true, audio: false }, (mediaStream) => {
+			// 	call.answer(stream);
+			// 	// call.on("stream", function (remoteStream) {
+			// 	// 	remoteVideoRef.current.srcObject = remoteStream;
+			// 	// 	remoteVideoRef.current.play();
+			// 	// });
+			// });
 		});
 
 		peerInstance.current = peer;
 	}, []);
 
 	const call = async (remotePeerId) => {
-		var getUserMedia =
-			navigator.getUserMedia ||
-			navigator.webkitGetUserMedia ||
-			navigator.mozGetUserMedia;
+		// var getUserMedia =
+		// 	navigator.getUserMedia ||
+		// 	navigator.webkitGetUserMedia ||
+		// 	navigator.mozGetUserMedia;
 		
 		const stream = await navigator.mediaDevices.getUserMedia({
 			audio: false,
@@ -90,14 +92,21 @@ function App() {
 			},
 		});
 
-		getUserMedia({ video: true, audio: false }, (mediaStream) => {
-			const call = peerInstance.current.call(remotePeerId, stream);
+		const call = peerInstance.current.call(remotePeerId, stream);
 
-			call.on("stream", (remoteStream) => {
-				remoteVideoRef.current.srcObject = remoteStream;
-				remoteVideoRef.current.play();
-			});
+		call.on("stream", (remoteStream) => {
+			remoteVideoRef.current.srcObject = remoteStream;
+			remoteVideoRef.current.play();
 		});
+
+		// getUserMedia({ video: true, audio: false }, (mediaStream) => {
+		// 	const call = peerInstance.current.call(remotePeerId, stream);
+
+		// 	call.on("stream", (remoteStream) => {
+		// 		remoteVideoRef.current.srcObject = remoteStream;
+		// 		remoteVideoRef.current.play();
+		// 	});
+		// });
 	};
 
 	return (

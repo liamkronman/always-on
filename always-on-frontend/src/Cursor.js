@@ -19,8 +19,8 @@ export const PlayerCursor = (props) => {
 
 	useEffect(() => {
 		setTmpInterval((prev) => {
-			console.log("created, prev:", prev);
-			if (prev) return prev;
+			console.log("deleted prev:", prev);
+			if (prev) clearInterval(prev);
 			return setInterval(() => {
 				console.log("Running now");
 				if (pc !== undefined)

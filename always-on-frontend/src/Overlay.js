@@ -14,7 +14,6 @@ function Overlay() {
 		const peer = new Peer();
 
 		peer.on("open", (id) => {
-			console.log("Overlay PeerId is", id);
 			setPeerId(id);
 		});
 		/*
@@ -22,11 +21,9 @@ function Overlay() {
 		 */
 		peer.on("connection", async (conn) => {
 			conn.on("data", (data) => {
-				console.log("Received data", data);
 				setOtherCursors((prev) => {
 					let new_map = new Map(prev);
 					new_map[data.user] = { ...prev[data.user], ...data.data };
-					console.log("New combined data is", new_map);
 					return new_map;
 				});
 			});
@@ -41,10 +38,19 @@ function Overlay() {
 			onMouseMove={(event) => setMyCursorLoc([event.clientX, event.clientY])}
 			style={{ height: "100vh", width: "100vw" }}
 		>
-			{Object.entries(otherCursors).forEach((key, val) => {
-				const { content, ...rest } = val;
-				console.log("Building cursor Information", content, rest, val);
-				return <PlayerCursor {...rest}>content</PlayerCursor>;
+			<span
+				style={{
+					color: "rgba(0, 255, 0, 0.5)",
+					fontSize: 30,
+					fontStyle: "bold",
+					background: "rgba(0, 0, 0, 0.5)",
+					padding: "1em",
+				}}
+			>
+				{peerId}
+			</span>
+			{Object.entries(otherCursors).map((val, index) => {
+				return <PlayerCursor point={val[1].point}>test</PlayerCursor>;
 			})}
 		</div>
 	);

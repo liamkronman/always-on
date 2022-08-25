@@ -84,16 +84,16 @@ const createWindow = () => {
 			nodeIntegration: true,
 		},
 		transparent: true,
-		//alwaysOnTop: true,
+		alwaysOnTop: true,
 	});
 	overlayWindow.maximize();
-	//overlayWindow.setIgnoreMouseEvents(true);
+	overlayWindow.setIgnoreMouseEvents(true);
 	// ^^ will cause issues; we only want to ignore lcicks
 
 	overlayWindow.loadURL("http://localhost:4000/overlay");
 
 	// Open the DevTools.
-	overlayWindow.webContents.openDevTools();
+	// overlayWindow.webContents.openDevTools();
 };
 
 app.on("ready", () => {

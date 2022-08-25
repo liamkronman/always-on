@@ -46,32 +46,15 @@ function App() {
 		});
 
 		peer.on("call", async (call) => {
-			// var getUserMedia =
-			// 	navigator.getUserMedia ||
-			// 	navigator.webkitGetUserMedia ||
-			// 	navigator.mozGetUserMedia;
 
 			console.log("Streaming");
 			call.answer(stream);
-
-			// getUserMedia({ video: true, audio: false }, (mediaStream) => {
-			// 	call.answer(stream);
-			// 	// call.on("stream", function (remoteStream) {
-			// 	// 	remoteVideoRef.current.srcObject = remoteStream;
-			// 	// 	remoteVideoRef.current.play();
-			// 	// });
-			// });
 		});
 
 		peerInstance.current = peer;
 	}, [stream]);
 
 	const call = async (remotePeerId) => {
-		// var getUserMedia =
-		// 	navigator.getUserMedia ||
-		// 	navigator.webkitGetUserMedia ||
-		// 	navigator.mozGetUserMedia;
-
 		try {
 			const call = peerInstance.current.call(remotePeerId, stream);
 
@@ -82,15 +65,6 @@ function App() {
 		} catch (e) {
 			console.log(e);
 		}
-
-		// getUserMedia({ video: true, audio: false }, (mediaStream) => {
-		// 	const call = peerInstance.current.call(remotePeerId, stream);
-
-		// 	call.on("stream", (remoteStream) => {
-		// 		remoteVideoRef.current.srcObject = remoteStream;
-		// 		remoteVideoRef.current.play();
-		// 	});
-		// });
 	};
 
 	return (

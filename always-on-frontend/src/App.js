@@ -13,7 +13,14 @@ function App() {
 	const [myCursorLoc, setMyCursorLoc] = useState();
 	const [cursorConn, setCursorConn] = useState();
 	const [streamScreenSize, setStreamScreenSize] = useState([800, 600]);
+	const [token, setToken] = useState(null);
+	const [displaySignup, setDisplaySignup] = useState(true);
 	const myCursorInputRef = useRef();
+
+	// check if authenticated on load
+	useEffect(() => {
+		setToken(localStorage.getItem("accessToken"));
+	}, [])
 
 	const getStream = async (screenId) => {
 		try {
@@ -47,7 +54,11 @@ function App() {
 	});
 
 	useEffect(() => {
-		const peer = new Peer();
+		const peer = new Peer({
+			host: "159.223.143.90",
+			path: "peerjs",
+			port: 80
+		});
 
 		peer.on("open", (id) => {
 			setPeerId(id);
@@ -118,38 +129,70 @@ function App() {
 
 	return (
 		<div className="App">
-			<h1>Current user id is {peerId}</h1>
-			<input
-				type="text"
-				value={remotePeerIdValue}
-				onChange={(e) => {
-					setRemotePeerIdValue(e.target.value);
-				}}
-			/>
-			<button onClick={() => call(remotePeerIdValue)}>Connect</button>
-			<div>
-				<video
-					onMouseMove={(event) =>
-						setMyCursorLoc([event.clientX, event.clientY])
-					}
-					onMouseLeave={(event) => setMyCursorLoc(undefined)}
-					ref={remoteVideoRef}
-					style={{
-						//cursor: "none",
-						border: "1px solid black",
-						width: "100%",
-						height: "auto",
-						maxHeight: "100%",
-					}}
-				/>
-			</div>
-			<PlayerCursor
-				point={myCursorLoc}
-				myCursorInputRef={myCursorInputRef}
-				fillColor="rgb(100, 250, 50)"
-			>
-				Text
-			</PlayerCursor>
+			{
+				token
+				? <>
+					<h1>Current user id is {peerId}</h1>
+					<input
+						type="text"
+						value={remotePeerIdValue}
+						onChange={(e) => {
+							setRemotePeerIdValue(e.target.value);
+						}}
+					/>
+					<button onClick={() => call(remotePeerIdValue)}>Connect</button>
+					<div>
+						<video
+							onMouseMove={(event) =>
+								setMyCursorLoc([event.clientX, event.clientY])
+							}
+							onMouseLeave={(event) => setMyCursorLoc(undefined)}
+							ref={remoteVideoRef}
+							style={{
+								//cursor: "none",
+								border: "1px solid black",
+								width: "100%",
+								height: "auto",
+								maxHeight: "100%",
+							}}
+						/>
+					</div>
+					<PlayerCursor
+						point={myCursorLoc}
+						myCursorInputRef={myCursorInputRef}
+						fillColor="rgb(100, 250, 50)"
+					>
+						Text
+					</PlayerCursor>
+				</>
+				: displaySignup
+				? <>
+					<div className="alwayson-tag">AlwaysOn</div>
+					<div className="login-container">
+						<div></div>
+						<div className="auth-topline">Sign Up</div>
+						<div className="auth-input-container">
+							<div className="auth-input-title">Username</div>
+							<input className="auth-input-area" type="text" name="username" placeholder="Set a username." />
+						</div>
+						<div className="auth-input-container">
+							<div className="auth-input-title">Email</div>
+							<input className="auth-input-area" type="text" name="email" placeholder="Enter your email." />
+						</div>
+						<div className="auth-input-container">
+							<div className="auth-input-title">Password</div>
+							<input className="auth-input-area" type="password" name="password" placeholder="Set a password." />
+						</div>
+						<div className="auth-input-container">
+							<div className="auth-input-title">Confirm password</div>
+							<input className="auth-input-area" type="password" name="confirm-password" placeholder="Re-type that password." />
+						</div>
+						<button className="auth-submit-btn">Turn me on</button>
+						<a className="auth-already-tagline">Already have an account?</a>
+					</div>
+				</>
+				: <></>
+			}
 		</div>
 	);
 }

@@ -3,6 +3,7 @@ import "./App.css";
 import { useRef, useEffect, useCallback, useState } from "react";
 import { PlayerCursor } from "./Cursor";
 import Peer from "peerjs";
+import axios from 'axios';
 
 function App() {
 	const [peerId, setPeerId] = useState("");
@@ -12,15 +13,20 @@ function App() {
 	const peerInstance = useRef(null);
 	const [myCursorLoc, setMyCursorLoc] = useState();
 	const [cursorConn, setCursorConn] = useState();
-	const [streamScreenSize, setStreamScreenSize] = useState([800, 600]);
-	const [token, setToken] = useState(null);
+	const [streamScreenSize, setStreamScreenSize] = useState([800, 600])
 	const [displaySignup, setDisplaySignup] = useState(true);
 	const myCursorInputRef = useRef();
+
+	const [token, setToken] = useState(null);
+	const [signupUsername, setSignupUsername] = useState("");
+	const [signupEmail, setSignupEmail] = useState("");
+	const [signupPassword, setSignupPassword] = useState("");
+	const [signupConfirmPassword, setSignupConfirmPassword] = useState("");
 
 	// check if authenticated on load
 	useEffect(() => {
 		setToken(localStorage.getItem("accessToken"));
-	}, [])
+	}, []);
 
 	const getStream = async (screenId) => {
 		try {
@@ -173,21 +179,27 @@ function App() {
 						<div className="auth-topline">Sign Up</div>
 						<div className="auth-input-container">
 							<div className="auth-input-title">Username</div>
-							<input className="auth-input-area" type="text" name="username" placeholder="Set a username." />
+							<input className="auth-input-area" type="text" name="username" placeholder="Set a username." value={signupUsername} onChange={(e) => setSignupUsername(e.target.value)} />
 						</div>
 						<div className="auth-input-container">
 							<div className="auth-input-title">Email</div>
-							<input className="auth-input-area" type="text" name="email" placeholder="Enter your email." />
+							<input className="auth-input-area" type="text" name="email" placeholder="Enter your email." value={signupEmail} onChange={(e) => setSignupEmail(e.target.value)} />
 						</div>
 						<div className="auth-input-container">
 							<div className="auth-input-title">Password</div>
-							<input className="auth-input-area" type="password" name="password" placeholder="Set a password." />
+							<input className="auth-input-area" type="password" name="password" placeholder="Set a password." value={signupPassword} onChange={(e) => setSignupPassword(e.target.value)} />
 						</div>
 						<div className="auth-input-container">
 							<div className="auth-input-title">Confirm password</div>
-							<input className="auth-input-area" type="password" name="confirm-password" placeholder="Re-type that password." />
+							<input className="auth-input-area" type="password" name="confirm-password" placeholder="Re-type that password." value={signupConfirmPassword} onChange={(e) => setSignupConfirmPassword(e.target.value)} />
 						</div>
-						<button className="auth-submit-btn">Turn me on</button>
+						<button className="auth-submit-btn" onClick={() => {
+							if (signupPassword === signupConfirmPassword) {
+								axios.post("http://159.223.143.90/api/auth/signin", {
+
+								})
+							}
+						}}>Turn me on</button>
 						<a className="auth-already-tagline">Already have an account?</a>
 					</div>
 				</>

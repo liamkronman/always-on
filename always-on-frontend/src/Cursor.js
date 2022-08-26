@@ -1,4 +1,3 @@
-import Peer from "peerjs";
 import { PerfectCursor } from "perfect-cursors";
 import { useEffect, useState } from "react";
 import "./Cursor.css";

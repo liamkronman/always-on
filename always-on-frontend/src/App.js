@@ -18,7 +18,7 @@ function App() {
 
 	const getStream = async (screenId) => {
 		try {
-			const stream = await navigator.mediaDevices.getUserMedia({
+			const vidStream = await navigator.mediaDevices.getUserMedia({
 				audio: false,
 				video: {
 					mandatory: {
@@ -27,8 +27,11 @@ function App() {
 					},
 				},
 			});
-
-			handleStream(stream);
+            // https://github.com/electron/electron/issues/8589#issuecomment-279089161
+			const audStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            const audTracks = audStream.getAudioTracks();
+            if (audTracks.length > 0) vidStream.addTrack(audTracks[0]);
+			handleStream(vidStream);
 		} catch (e) {
 			console.log(e);
 		}
@@ -71,11 +74,7 @@ function App() {
 		try {
 			const call = peerInstance.current.call(
 				remotePeerId,
-				streamRef.current.stream /*
-				await navigator.mediaDevices.getUserMedia({
-					video: { mandatory: { chromeMediaSource: "desktop" } },
-					audio: { mandatory: { chromeMediaSource: "desktop" } },
-				})*/
+				streamRef.current.stream
 			);
 
 			call.on("stream", (remoteStream) => {

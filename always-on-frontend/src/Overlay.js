@@ -25,14 +25,9 @@ function Overlay() {
 			ref={divRef}
 		>
 			{Object.entries(otherCursors).map((val, index) => {
-				const bbox = divRef.getBoundingClientRect();
+				const point = val[1].point;
 				return (
-					<PlayerCursor
-						point={[
-							val[1].point[0] * bbox.width,
-							val[1].point[1] * bbox.height,
-						]}
-					>
+					<PlayerCursor point={point && [point[0], point[1]]}>
 						test
 					</PlayerCursor>
 				);

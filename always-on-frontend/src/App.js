@@ -108,10 +108,8 @@ function App() {
 				user: peerId, // todo: need a better id
 				data: {
 					point: myCursorLoc && [
-						((myCursorLoc[0] - boundingBox.x) * streamScreenSize[0]) /
-							boundingBox.width,
-						((myCursorLoc[1] - boundingBox.y) * streamScreenSize[1]) /
-							boundingBox.height,
+						myCursorLoc[0] - boundingBox.x,
+						myCursorLoc[1] - boundingBox.y,
 					],
 				},
 			});

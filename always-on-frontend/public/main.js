@@ -85,8 +85,9 @@ const createWindow = () => {
 		},
 		transparent: true,
 		alwaysOnTop: true,
-        focusable: false,
-        fullscreen: true,
+		focusable: false,
+		simpleFullscreen: true,
+		fullscreen: true,
 	});
 	overlayWindow.setIgnoreMouseEvents(true);
 	// ^^ will cause issues; we only want to ignore lcicks

@@ -7,7 +7,7 @@ import Peer from "peerjs";
 function App() {
 	const [peerId, setPeerId] = useState("");
 	const [remotePeerIdValue, setRemotePeerIdValue] = useState("");
-	const [stream, setStream] = useState(null);
+	const streamRef = useRef({stream: null})
 	const remoteVideoRef = useRef(null);
 	const peerInstance = useRef(null);
 	const peerInstanceCursor = useRef(null);
@@ -38,7 +38,7 @@ function App() {
 		let { width, height } = stream.getVideoTracks()[0].getSettings();
 		setStreamScreenSize([width, height]);
 
-		setStream(stream);
+		streamRef.current.stream = stream;
 	};
 
 	window.electronAPI.getScreenId((event, screenId) => {
@@ -54,11 +54,13 @@ function App() {
 		});
 
 		peer.on("call", async (call) => {
-			call.answer(stream);
+			call.answer(streamRef.current.stream);
 		});
 
 		peerInstance.current = peer;
-	}, [stream]);
+
+        return () => peer.destroy();
+	}, []);
 
 	useEffect(() => {
 		const peer = new Peer();
@@ -68,12 +70,14 @@ function App() {
 		});
 
 		peerInstanceCursor.current = peer;
+
+        return () => peer.destroy();
 	}, []);
 
 	const call = async (remotePeerId) => {
 		try {
 			console.log("Attempting to call");
-			const call = peerInstance.current.call(remotePeerId, stream);
+			const call = peerInstance.current.call(remotePeerId, streamRef.current.stream);
 
 			console.log("Attempting to stream");
 			call.on("stream", (remoteStream) => {

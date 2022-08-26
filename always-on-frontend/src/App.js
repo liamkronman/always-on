@@ -14,6 +14,7 @@ function App() {
 	const [cursorConn, setCursorConn] = useState();
 	const [streamScreenSize, setStreamScreenSize] = useState([800, 600]);
 	const myCursorInputRef = useRef();
+	const [cursorInputContent, setCursorInputContent] = useState("");
 
 	const getStream = async (screenId) => {
 		try {
@@ -70,7 +71,7 @@ function App() {
 		try {
 			const call = peerInstance.current.call(
 				remotePeerId,
-				await navigator.mediaDevices.getUserMedia({audio: true})
+				await navigator.mediaDevices.getUserMedia({ audio: true })
 			);
 
 			call.on("stream", (remoteStream) => {
@@ -154,6 +155,9 @@ function App() {
 			</div>
 			<PlayerCursor
 				point={myCursorLoc}
+				isEditingCursor
+				cursorInputContent={cursorInputContent}
+				setCursorInputContent={setCursorInputContent}
 				myCursorInputRef={myCursorInputRef}
 				fillColor="rgb(100, 250, 50)"
 			>

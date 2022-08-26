@@ -55,13 +55,13 @@ export const PlayerCursor = (props) => {
 				</g>
 			</svg>
 			{props.isEditingCursor ? (
+				<p contentEditable spellcheck="false" ref={props.myCursorInputRef}></p>
+			) : (
 				props.children && (
 					<div className={props.fading && "fading"}>
 						<p>{props.children}</p>
 					</div>
 				)
-			) : (
-				<p contentEditable spellcheck="false" ref={props.myCursorInputRef}></p>
 			)}
 		</div>
 	);

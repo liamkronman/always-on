@@ -26,14 +26,11 @@ export const PlayerCursor = (props) => {
 			style={{
 				background: "transparent",
 				position: "fixed",
-				display: "flex",
+				display: props.point ? "flex" : "none",
 				flexDirection: "column",
-				top: 0,
-				left: 0,
+				top: props.point ? props.point[1] * 100 + '%' : 0,
+				left: props.point ? props.point[0] * 100 + '%' : 0,
 				zIndex: -2,
-				...((props.point && {
-					transform: `translate(${props.point[0]}px, ${props.point[1]}px`,
-				}) || { display: "none" }),
 			}}
 			className="playercursor"
 		>

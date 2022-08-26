@@ -11,6 +11,7 @@ function App() {
 	const remoteVideoRef = useRef(null);
 	const peerInstance = useRef(null);
 	const [myCursorLoc, setMyCursorLoc] = useState();
+    const [mediaConn, setMediaConn] = useState();
 	const [cursorConn, setCursorConn] = useState();
 	const [streamScreenSize, setStreamScreenSize] = useState([800, 600]);
 	const myCursorInputRef = useRef();
@@ -78,6 +79,9 @@ function App() {
 
 	const call = async (remotePeerId) => {
 		try {
+            if (mediaConn) mediaConn.close();
+            if (cursorConn) cursorConn.close();
+
 			const call = peerInstance.current.call(
 				remotePeerId,
 				streamRef.current.stream
@@ -87,6 +91,8 @@ function App() {
 				remoteVideoRef.current.srcObject = remoteStream;
 				remoteVideoRef.current.autoplay = true;
 			});
+
+            setMediaConn(call);
 
 			setCursorConn(peerInstance.current.connect(remotePeerId));
 		} catch (e) {

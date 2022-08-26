@@ -1,5 +1,7 @@
 // import logo from './logo.svg';
 import "./App.css";
+import VideoPage from './VideoPage';
+
 import { useEffect, useState } from "react";
 import Auth from './Auth';
 
@@ -15,7 +17,7 @@ function App() {
 		<div className="App">
 			{
 				token
-				? <></>
+				? <VideoPage />
 				: <Auth setToken={setToken} />
 			}
 		</div>

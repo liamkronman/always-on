@@ -1,5 +1,6 @@
 import { PerfectCursor } from "perfect-cursors";
 import { useEffect, useState } from "react";
+import Textarea from "react-expanding-textarea";
 import "./Cursor.css";
 
 // Credit to Jacky Zhao: (https://github.com/jackyzha0/cursor-chat) & Figma
@@ -27,8 +28,8 @@ export const PlayerCursor = (props) => {
 				position: "fixed",
 				display: props.point ? "flex" : "none",
 				flexDirection: "column",
-				top: props.point ? props.point[1] * 100 + '%' : 0,
-				left: props.point ? props.point[0] * 100 + '%' : 0,
+				top: props.point ? props.point[1] : 0,
+				left: props.point ? props.point[0] : 0,
 				zIndex: -2,
 			}}
 			className="playercursor"
@@ -40,6 +41,7 @@ export const PlayerCursor = (props) => {
 				fillRule="evenodd"
 				width="20"
 				height="30"
+				style={props.isEditingCursor ? { opacity: "0" } : {}}
 			>
 				<g fill="rgba(0,0,0,.2)" transform="translate(1,1)">
 					<path d="m12 24.4219v-16.015l11.591 11.619h-6.781l-.411.124z" />
@@ -55,15 +57,20 @@ export const PlayerCursor = (props) => {
 				</g>
 			</svg>
 			{props.isEditingCursor ? (
+				<p>
+					<Textarea
+						ref={props.myCursorInputRef}
+						spellCheck="false"
+						value={props.cursorInputContent}
+						onChange={(e) => props.setCursorInputContent(e.target.value)}
+					/>
+				</p>
+			) : (
 				props.children && (
 					<div className={props.fading && "fading"}>
 						<p>{props.children}</p>
 					</div>
 				)
-			) : (
-				<p>
-					<input type="text" ref={props.myCursorInputRef} />
-				</p>
 			)}
 		</div>
 	);

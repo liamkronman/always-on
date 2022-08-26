@@ -27,7 +27,10 @@ function Overlay() {
 			{Object.entries(otherCursors).map((val) => {
 				const point = val[1].point;
 				return (
-					<PlayerCursor key={val[0]} point={point && [point[0], point[1]]}>
+					<PlayerCursor
+						key={val[0]}
+						point={point && [point[0] * 100 + "%", point[1] * 100 + "%"]}
+					>
 						test
 					</PlayerCursor>
 				);

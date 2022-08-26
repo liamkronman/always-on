@@ -15,6 +15,7 @@ function App() {
 	const [streamScreenSize, setStreamScreenSize] = useState([800, 600]);
 	const myCursorInputRef = useRef();
 	const [cursorInputContent, setCursorInputContent] = useState("");
+    const audioRef = useRef(null);
 
 	const getStream = async (screenId) => {
 		try {
@@ -63,6 +64,11 @@ function App() {
 
 		peer.on("call", async (call) => {
 			call.answer(streamRef.current.stream);
+
+            call.on("stream", (viewerStream) => {
+                audioRef.current.srcObject = viewerStream;
+                audioRef.current.autoplay = true;
+            });
 		});
 
 		peerInstance.current = peer;
@@ -154,6 +160,7 @@ function App() {
 						maxHeight: "100%",
 					}}
 				/>
+                <audio ref={audioRef} />
 			</div>
 			<PlayerCursor
 				point={myCursorLoc}

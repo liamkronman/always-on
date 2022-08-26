@@ -24,10 +24,10 @@ function Overlay() {
 			style={{ height: "100vh", width: "100vw" }}
 			ref={divRef}
 		>
-			{Object.entries(otherCursors).map((val, index) => {
+			{Object.entries(otherCursors).map((val) => {
 				const point = val[1].point;
 				return (
-					<PlayerCursor point={point && [point[0], point[1]]}>
+					<PlayerCursor key={val[0]} point={point && [point[0], point[1]]}>
 						test
 					</PlayerCursor>
 				);

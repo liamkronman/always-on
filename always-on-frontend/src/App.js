@@ -14,6 +14,7 @@ function App() {
 	const [myCursorLoc, setMyCursorLoc] = useState();
 	const [remotePeerCursorIdValue, setRemotePeerCursorIdValue] = useState("");
 	const [cursorConn, setCursorConn] = useState();
+	const [streamScreenSize, setStreamScreenSize] = useState([800, 600]);
 
 	const getStream = async (screenId) => {
 		try {
@@ -35,6 +36,7 @@ function App() {
 
 	const handleStream = (stream) => {
 		let { width, height } = stream.getVideoTracks()[0].getSettings();
+		setStreamScreenSize([width, height]);
 
 		setStream(stream);
 	};
@@ -64,18 +66,22 @@ function App() {
 		peer.on("open", (id) => {
 			setPeerId(id);
 		});
-		
+
 		peerInstanceCursor.current = peer;
-	}, [])
+	}, []);
 
 	const call = async (remotePeerId) => {
 		try {
+			console.log("Attempting to call");
 			const call = peerInstance.current.call(remotePeerId, stream);
 
+			console.log("Attempting to stream");
 			call.on("stream", (remoteStream) => {
+				console.log("Streaming");
 				remoteVideoRef.current.srcObject = remoteStream;
 				remoteVideoRef.current.play();
 			});
+			console.log("Set call event listener");
 		} catch (e) {
 			console.log(e);
 		}
@@ -94,15 +100,23 @@ function App() {
 
 	useEffect(() => {
 		if (cursorConn) {
-			console.log("Sent data to peer cursor backend!");
+			//console.log("Sent data to peer cursor backend!");
+
+			const boundingBox = remoteVideoRef.current.getBoundingClientRect();
+
 			cursorConn.send({
 				user: peerId, // todo: need a better id
 				data: {
-					point: myCursorLoc,
+					point: myCursorLoc && [
+						((myCursorLoc[0] - boundingBox.x) * streamScreenSize[0]) /
+							boundingBox.width,
+						((myCursorLoc[1] - boundingBox.y) * streamScreenSize[1]) /
+							boundingBox.height,
+					],
 				},
 			});
 		}
-	}, [peerId, cursorConn, myCursorLoc]);
+	}, [peerId, cursorConn, myCursorLoc, streamScreenSize]);
 
 	return (
 		<div className="App">
@@ -128,9 +142,11 @@ function App() {
 					}
 					onMouseLeave={(event) => setMyCursorLoc(undefined)}
 					ref={remoteVideoRef}
-					style={{
-						cursor: "none",
-					}}
+					style={
+						{
+							//cursor: "none",
+						}
+					}
 				/>
 			</div>
 			<PlayerCursor point={myCursorLoc} fillColor="rgb(100, 250, 50)">

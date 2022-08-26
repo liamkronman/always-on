@@ -166,7 +166,7 @@ function App() {
 						Text
 					</PlayerCursor>
 				</>
-				: <Auth />
+				: <Auth setToken={setToken} />
 			}
 		</div>
 	);

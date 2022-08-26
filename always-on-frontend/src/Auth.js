@@ -1,12 +1,17 @@
 import axios from 'axios';
 import { useRef, useEffect, useCallback, useState } from "react";
 
-function Auth() {
+function Auth({setToken}) {
     const [displaySignup, setDisplaySignup] = useState(true);
     const [signupUsername, setSignupUsername] = useState("");
 	const [signupEmail, setSignupEmail] = useState("");
 	const [signupPassword, setSignupPassword] = useState("");
 	const [signupConfirmPassword, setSignupConfirmPassword] = useState("");
+    const signupUsernameRef = useRef();
+
+    useEffect(() => {
+        signupUsernameRef.current.focus();
+    }, []);
 
     return (
         <>
@@ -19,7 +24,7 @@ function Auth() {
                         <div className="auth-topline">Sign Up</div>
                         <div className="auth-input-container">
                             <div className="auth-input-title">Username</div>
-                            <input className="auth-input-area" type="text" name="username" placeholder="Set a username." value={signupUsername} onChange={(e) => setSignupUsername(e.target.value)} />
+                            <input className="auth-input-area" type="text" name="username" placeholder="Set a username." value={signupUsername} ref={signupUsernameRef} onChange={(e) => setSignupUsername(e.target.value)} />
                         </div>
                         <div className="auth-input-container">
                             <div className="auth-input-title">Email</div>

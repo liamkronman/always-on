@@ -7,7 +7,7 @@ import Peer from "peerjs";
 function App() {
 	const [peerId, setPeerId] = useState("");
 	const [remotePeerIdValue, setRemotePeerIdValue] = useState("");
-	const streamRef = useRef({stream: null})
+	const streamRef = useRef({ stream: null });
 	const remoteVideoRef = useRef(null);
 	const peerInstance = useRef(null);
 	const peerInstanceCursor = useRef(null);
@@ -59,7 +59,7 @@ function App() {
 
 		peerInstance.current = peer;
 
-        return () => peer.destroy();
+		return () => peer.destroy();
 	}, []);
 
 	useEffect(() => {
@@ -71,13 +71,16 @@ function App() {
 
 		peerInstanceCursor.current = peer;
 
-        return () => peer.destroy();
+		return () => peer.destroy();
 	}, []);
 
 	const call = async (remotePeerId) => {
 		try {
 			console.log("Attempting to call");
-			const call = peerInstance.current.call(remotePeerId, streamRef.current.stream);
+			const call = peerInstance.current.call(
+				remotePeerId,
+				streamRef.current.stream
+			);
 
 			console.log("Attempting to stream");
 			call.on("stream", (remoteStream) => {
@@ -112,8 +115,10 @@ function App() {
 				user: peerId, // todo: need a better id
 				data: {
 					point: myCursorLoc && [
-						myCursorLoc[0] - boundingBox.x,
-						myCursorLoc[1] - boundingBox.y,
+						((myCursorLoc[0] - boundingBox.x) * streamScreenSize[0]) /
+							boundingBox.width,
+						((myCursorLoc[1] - boundingBox.y) * streamScreenSize[1]) /
+							boundingBox.height,
 					],
 				},
 			});
@@ -126,16 +131,17 @@ function App() {
 			<input
 				type="text"
 				value={remotePeerIdValue}
-				onChange={(e) => setRemotePeerIdValue(e.target.value)}
+				onChange={(e) => {
+					setRemotePeerIdValue(e.target.value);
+				}}
 			/>
-			<button onClick={() => call(remotePeerIdValue)}>Connect (Video)</button>
-			<input
-				type="text"
-				value={remotePeerCursorIdValue}
-				onChange={(e) => setRemotePeerCursorIdValue(e.target.value)}
-			/>
-			<button onClick={() => connect(remotePeerCursorIdValue)}>
-				Connect (Cursor)
+			<button
+				onClick={() => {
+					call(remotePeerIdValue);
+					connect(remotePeerIdValue);
+				}}
+			>
+				Connect
 			</button>
 			<div>
 				<video
@@ -144,11 +150,13 @@ function App() {
 					}
 					onMouseLeave={(event) => setMyCursorLoc(undefined)}
 					ref={remoteVideoRef}
-					style={
-						{
-							//cursor: "none",
-						}
-					}
+					style={{
+						//cursor: "none",
+						border: "1px solid black",
+						width: "100%",
+						height: "auto",
+						maxHeight: "100%",
+					}}
 				/>
 			</div>
 			<PlayerCursor point={myCursorLoc} fillColor="rgb(100, 250, 50)">

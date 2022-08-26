@@ -101,8 +101,17 @@ function App() {
 
 	// https://devtrium.com/posts/how-keyboard-shortcut
 	const handleKeyPress = useCallback((event) => {
-		if (event.key === "F1") {
-			console.log("PRESSED");
+		if (event.key === "Enter") {
+			if (
+				document.activeElement === document.body ||
+				document.activeElement === myCursorInputRef.current
+			) {
+				if (document.activeElement !== myCursorInputRef.current) {
+					setCursorInputContent("");
+					myCursorInputRef.current.focus();
+				} else document.activeElement.blur();
+				event.preventDefault();
+			}
 		}
 	}, []);
 

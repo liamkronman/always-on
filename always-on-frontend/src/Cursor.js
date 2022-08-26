@@ -27,8 +27,8 @@ export const PlayerCursor = (props) => {
 				position: "fixed",
 				display: props.point ? "flex" : "none",
 				flexDirection: "column",
-				top: props.point ? props.point[1] * 100 + '%' : 0,
-				left: props.point ? props.point[0] * 100 + '%' : 0,
+				top: props.point ? props.point[1] : 0,
+				left: props.point ? props.point[0] : 0,
 				zIndex: -2,
 			}}
 			className="playercursor"
@@ -61,9 +61,7 @@ export const PlayerCursor = (props) => {
 					</div>
 				)
 			) : (
-				<p>
-					<input type="text" ref={props.myCursorInputRef} />
-				</p>
+				<p contentEditable spellcheck="false" ref={props.myCursorInputRef}></p>
 			)}
 		</div>
 	);

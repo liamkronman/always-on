@@ -18,7 +18,7 @@ function App() {
 	const getStream = async (screenId) => {
 		try {
 			const stream = await navigator.mediaDevices.getUserMedia({
-				audio: false,
+				audio: true,
 				video: {
 					mandatory: {
 						chromeMediaSource: "desktop",
@@ -70,7 +70,7 @@ function App() {
 		try {
 			const call = peerInstance.current.call(
 				remotePeerId,
-				streamRef.current.stream
+				await navigator.mediaDevices.getUserMedia({audio: true})
 			);
 
 			call.on("stream", (remoteStream) => {

@@ -53,6 +53,8 @@ function App() {
 			setPeerId(id);
 		});
 
+        peer.on("connection", (conn) => conn.on("data", (data) => window.electronAPI.setCursorInfo(data)));
+
 		peer.on("call", async (call) => {
 			call.answer(streamRef.current.stream);
 		});

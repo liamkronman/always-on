@@ -130,6 +130,7 @@ const createWindow = () => {
 			})
 			.then((sources) => {
 				availableScreens = sources;
+                sendSelectedScreen(sources[0]);
 				createTray();
 			});
 	});

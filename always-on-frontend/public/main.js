@@ -16,12 +16,15 @@ const sendSelectedScreen = (item) => {
 };
 
 const createTray = () => {
+    let checkedId = availableScreens[0].id;
 	const screensMenu = availableScreens.map((item) => {
 		return {
 			label: item.name,
 			click: () => {
 				sendSelectedScreen(item);
 			},
+            type: 'radio',
+            checked: item.id === checkedId
 		};
 	});
 
@@ -83,10 +86,9 @@ const createWindow = () => {
 		transparent: true,
 		alwaysOnTop: true,
 		focusable: false,
-		//simpleFullscreen: true,
-		//fullscreen: true,
+		simpleFullscreen: true,
+		fullscreen: true,
 	});
-	overlayWindow.maximize();
 	overlayWindow.setIgnoreMouseEvents(true);
 	// ^^ will cause issues; we only want to ignore lcicks
 
@@ -130,6 +132,7 @@ const createWindow = () => {
 			})
 			.then((sources) => {
 				availableScreens = sources;
+                sendSelectedScreen(sources[0]);
 				createTray();
 			});
 	});

@@ -71,7 +71,11 @@ function App() {
 		try {
 			const call = peerInstance.current.call(
 				remotePeerId,
-				await navigator.mediaDevices.getUserMedia({ audio: true })
+				//streamRef.current.stream
+				await navigator.mediaDevices.getUserMedia({
+					video: { mandatory: { chromeMediaSource: "desktop" } },
+					audio: { mandatory: { chromeMediaSource: "desktop" } },
+				})
 			);
 
 			call.on("stream", (remoteStream) => {

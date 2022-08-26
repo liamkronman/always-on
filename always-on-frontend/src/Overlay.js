@@ -26,6 +26,7 @@ function Overlay() {
 		>
 			{Object.entries(otherCursors).map((val) => {
 				const point = val[1].point;
+				console.log(val);
 				return (
 					<PlayerCursor
 						key={val[0]}

@@ -17,7 +17,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "PORT=4000 BROWSER=none react-scripts start",
+    "start": "react-scripts start",
     "electron": "electron-forge start",
     "build": "react-scripts build",
     "test": "react-scripts test",

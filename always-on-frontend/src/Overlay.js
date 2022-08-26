@@ -7,7 +7,7 @@ import Peer from "peerjs";
 function Overlay() {
 	const [peerId, setPeerId] = useState();
 	const [myCursorLoc, setMyCursorLoc] = useState([0, 0]);
-	const [otherCursors, setOtherCursors] = useState(new Map());
+	const [otherCursors, setOtherCursors] = useState({});
 	const peerInstance = useRef(null);
 
 	useEffect(() => {
@@ -19,15 +19,7 @@ function Overlay() {
 		/*
 		 * You are the server
 		 */
-		peer.on("connection", async (conn) => {
-			conn.on("data", (data) => {
-				setOtherCursors((prev) => {
-					let new_map = new Map(prev);
-					new_map[data.user] = { ...prev[data.user], ...data.data };
-					return new_map;
-				});
-			});
-		});
+		peer.on("connection", async (conn) => conn.on("data", (data) => setOtherCursors((prev) => ({...prev, [data.user]: {...prev[data.user], ...data.data}}))));
 
 		peerInstance.current = peer;
 	}, []);

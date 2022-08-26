@@ -79,7 +79,7 @@ function App() {
 
 			call.on("stream", (remoteStream) => {
 				remoteVideoRef.current.srcObject = remoteStream;
-				remoteVideoRef.current.play();
+				remoteVideoRef.current.autoplay = true;
 			});
 
 			setCursorConn(peerInstance.current.connect(remotePeerId));

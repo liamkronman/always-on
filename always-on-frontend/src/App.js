@@ -71,11 +71,11 @@ function App() {
 		try {
 			const call = peerInstance.current.call(
 				remotePeerId,
-				//streamRef.current.stream
+				streamRef.current.stream /*
 				await navigator.mediaDevices.getUserMedia({
 					video: { mandatory: { chromeMediaSource: "desktop" } },
 					audio: { mandatory: { chromeMediaSource: "desktop" } },
-				})
+				})*/
 			);
 
 			call.on("stream", (remoteStream) => {
@@ -112,10 +112,8 @@ function App() {
 				document.activeElement === document.body ||
 				document.activeElement === myCursorInputRef.current
 			) {
-				if (document.activeElement !== myCursorInputRef.current) {
-					setCursorInputContent("");
-					myCursorInputRef.current.focus();
-				} else document.activeElement.blur();
+				setCursorInputContent("");
+				myCursorInputRef.current.focus();
 				event.preventDefault();
 			}
 		}

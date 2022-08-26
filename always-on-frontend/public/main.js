@@ -95,8 +95,10 @@ const createWindow = () => {
 	// Open the DevTools.
 	// overlayWindow.webContents.openDevTools();
 
-    // cursor sending
-    ipcMain.on("setCursorInfo", (event, arg) => overlayWindow.webContents.send('setCursorInfo', arg));
+	// cursor sending
+	ipcMain.on("setCursorInfo", (event, arg) =>
+		overlayWindow.webContents.send("setCursorInfo", arg)
+	);
 };
 
 app.on("ready", () => {

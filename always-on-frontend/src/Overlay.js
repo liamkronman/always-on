@@ -28,7 +28,7 @@ function Overlay() {
 				const point = val[1].point;
 				return (
 					<PlayerCursor point={point && [point[0], point[1]]}>
-						test
+						val[1].content
 					</PlayerCursor>
 				);
 			})}

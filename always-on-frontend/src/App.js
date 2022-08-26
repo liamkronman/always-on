@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import "./App.css";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useCallback, useState } from "react";
 import { PlayerCursor } from "./Cursor";
 import Peer from "peerjs";
 
@@ -13,6 +13,7 @@ function App() {
 	const [myCursorLoc, setMyCursorLoc] = useState();
 	const [cursorConn, setCursorConn] = useState();
 	const [streamScreenSize, setStreamScreenSize] = useState([800, 600]);
+	const myCursorInputRef = useRef();
 
 	const getStream = async (screenId) => {
 		try {
@@ -77,7 +78,7 @@ function App() {
 				remoteVideoRef.current.play();
 			});
 
-            setCursorConn(peerInstance.current.connect(remotePeerId));
+			setCursorConn(peerInstance.current.connect(remotePeerId));
 		} catch (e) {
 			console.log(e);
 		}
@@ -98,6 +99,23 @@ function App() {
 		}
 	}, [peerId, cursorConn, myCursorLoc, streamScreenSize]);
 
+	// https://devtrium.com/posts/how-keyboard-shortcut
+	const handleKeyPress = useCallback((event) => {
+		if (event.key === "F1") {
+			console.log("PRESSED");
+		}
+	}, []);
+
+	useEffect(() => {
+		// attach the event listener
+		document.addEventListener("keydown", handleKeyPress);
+
+		// remove the event listener
+		return () => {
+			document.removeEventListener("keydown", handleKeyPress);
+		};
+	}, [handleKeyPress]);
+
 	return (
 		<div className="App">
 			<h1>Current user id is {peerId}</h1>
@@ -108,9 +126,7 @@ function App() {
 					setRemotePeerIdValue(e.target.value);
 				}}
 			/>
-			<button onClick={() => call(remotePeerIdValue)}>
-				Connect
-			</button>
+			<button onClick={() => call(remotePeerIdValue)}>Connect</button>
 			<div>
 				<video
 					onMouseMove={(event) =>
@@ -127,7 +143,11 @@ function App() {
 					}}
 				/>
 			</div>
-			<PlayerCursor point={myCursorLoc} fillColor="rgb(100, 250, 50)">
+			<PlayerCursor
+				point={myCursorLoc}
+				myCursorInputRef={myCursorInputRef}
+				fillColor="rgb(100, 250, 50)"
+			>
 				Text
 			</PlayerCursor>
 		</div>

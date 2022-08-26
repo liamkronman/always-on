@@ -58,7 +58,17 @@ export const PlayerCursor = (props) => {
 					<path d="m13 10.814v11.188l2.969-2.866.428-.139h4.768z" />
 				</g>
 			</svg>
-			{props.children && <p>{props.children}</p>}
+			{props.isEditingCursor ? (
+				props.children && (
+					<div className={props.fading && "fading"}>
+						<p>{props.children}</p>
+					</div>
+				)
+			) : (
+				<p>
+					<input type="text" ref={props.myCursorInputRef} />
+				</p>
+			)}
 		</div>
 	);
 };

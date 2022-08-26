@@ -87,6 +87,17 @@ html {
     box-shadow: 0.15em 0.15em var(--color-blue);
     z-index: -2;
   }
+
+.playercursor p input
+{
+  background: transparent;
+  border: none;
+  min-width: 0;
+}
+  .fading
+  {
+    animation: fading 2s normal infinite;
+  }
   
   @keyframes float {
     0% {
@@ -130,3 +141,8 @@ html {
     }
   }
   
+  @keyframes fading {
+    0% {opacity: 60%;}
+    50% {opacity: 20%;}
+    100% {opacity: 60%;}
+  }

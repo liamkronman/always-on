@@ -56,7 +56,7 @@ function App() {
 		});
 
 		peerInstance.current = peer;
-	}, []);
+	}, [stream]);
 
 	useEffect(() => {
 		const peer = new Peer();

@@ -55,7 +55,14 @@ export const PlayerCursor = (props) => {
 				</g>
 			</svg>
 			{props.isEditingCursor ? (
-				<p contentEditable spellcheck="false" ref={props.myCursorInputRef}></p>
+				<p
+					contentEditable
+					spellCheck="false"
+					ref={props.myCursorInputRef}
+					/*onBlur={(e) => props.setCursorInputContent(e.element.value)}*/
+				>
+					{/*props.cursorInputContent*/}
+				</p>
 			) : (
 				props.children && (
 					<div className={props.fading && "fading"}>

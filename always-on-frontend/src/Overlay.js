@@ -31,7 +31,7 @@ function Overlay() {
 						key={val[0]}
 						point={point && [point[0] * 100 + "%", point[1] * 100 + "%"]}
 					>
-						test
+						{val[1].content}
 					</PlayerCursor>
 				);
 			})}

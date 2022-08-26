@@ -95,10 +95,11 @@ function App() {
 						(myCursorLoc[0] - boundingBox.x) / boundingBox.width,
 						(myCursorLoc[1] - boundingBox.y) / boundingBox.height,
 					],
+					content: cursorInputContent,
 				},
 			});
 		}
-	}, [peerId, cursorConn, myCursorLoc, streamScreenSize]);
+	}, [peerId, cursorConn, myCursorLoc, streamScreenSize, cursorInputContent]);
 
 	// https://devtrium.com/posts/how-keyboard-shortcut
 	const handleKeyPress = useCallback((event) => {

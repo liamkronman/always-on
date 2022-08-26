@@ -58,6 +58,8 @@ function App() {
 		});
 
 		peerInstance.current = peer;
+
+        return () => peer.destroy();
 	}, []);
 
 	useEffect(() => {
@@ -68,6 +70,8 @@ function App() {
 		});
 
 		peerInstanceCursor.current = peer;
+
+        return () => peer.destroy();
 	}, []);
 
 	const call = async (remotePeerId) => {

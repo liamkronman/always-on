@@ -10,7 +10,6 @@ function App() {
 	const streamRef = useRef({ stream: null });
 	const remoteVideoRef = useRef(null);
 	const peerInstance = useRef(null);
-	const peerInstanceCursor = useRef(null);
 	const [myCursorLoc, setMyCursorLoc] = useState();
 	const [cursorConn, setCursorConn] = useState();
 	const [streamScreenSize, setStreamScreenSize] = useState([800, 600]);
@@ -66,18 +65,6 @@ function App() {
 		return () => peer.destroy();
 	}, []);
 
-	useEffect(() => {
-		const peer = new Peer();
-
-		peer.on("open", (id) => {
-			setPeerId(id);
-		});
-
-		peerInstanceCursor.current = peer;
-
-		return () => peer.destroy();
-	}, []);
-
 	const call = async (remotePeerId) => {
 		try {
 			const call = peerInstance.current.call(
@@ -89,16 +76,11 @@ function App() {
 				remoteVideoRef.current.srcObject = remoteStream;
 				remoteVideoRef.current.play();
 			});
+
+            setCursorConn(peerInstance.current.connect(remotePeerId));
 		} catch (e) {
 			console.log(e);
 		}
-	};
-
-	const connect = async (remotePeerId) => {
-		setCursorConn(() => {
-			const conn = peerInstanceCursor.current.connect(remotePeerId);
-			return conn;
-		});
 	};
 
 	useEffect(() => {
@@ -128,12 +110,7 @@ function App() {
 					setRemotePeerIdValue(e.target.value);
 				}}
 			/>
-			<button
-				onClick={() => {
-					call(remotePeerIdValue);
-					connect(remotePeerIdValue);
-				}}
-			>
+			<button onClick={() => call(remotePeerIdValue)}>
 				Connect
 			</button>
 			<div>

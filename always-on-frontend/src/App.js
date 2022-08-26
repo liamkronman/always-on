@@ -19,7 +19,7 @@ function App() {
 	const getStream = async (screenId) => {
 		try {
 			const stream = await navigator.mediaDevices.getUserMedia({
-				audio: true,
+				audio: false,
 				video: {
 					mandatory: {
 						chromeMediaSource: "desktop",

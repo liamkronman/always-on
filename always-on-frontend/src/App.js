@@ -12,7 +12,6 @@ function App() {
 	const peerInstance = useRef(null);
 	const peerInstanceCursor = useRef(null);
 	const [myCursorLoc, setMyCursorLoc] = useState();
-	const [remotePeerCursorIdValue, setRemotePeerCursorIdValue] = useState("");
 	const [cursorConn, setCursorConn] = useState();
 	const [streamScreenSize, setStreamScreenSize] = useState([800, 600]);
 
@@ -53,7 +52,9 @@ function App() {
 			setPeerId(id);
 		});
 
-        peer.on("connection", (conn) => conn.on("data", (data) => window.electronAPI.setCursorInfo(data)));
+		peer.on("connection", (conn) =>
+			conn.on("data", (data) => window.electronAPI.setCursorInfo(data))
+		);
 
 		peer.on("call", async (call) => {
 			call.answer(streamRef.current.stream);
@@ -78,39 +79,29 @@ function App() {
 
 	const call = async (remotePeerId) => {
 		try {
-			console.log("Attempting to call");
 			const call = peerInstance.current.call(
 				remotePeerId,
 				streamRef.current.stream
 			);
 
-			console.log("Attempting to stream");
 			call.on("stream", (remoteStream) => {
-				console.log("Streaming");
 				remoteVideoRef.current.srcObject = remoteStream;
 				remoteVideoRef.current.play();
 			});
-			console.log("Set call event listener");
 		} catch (e) {
 			console.log(e);
 		}
 	};
 
 	const connect = async (remotePeerId) => {
-		console.log("Attempting to connect to peer cursor backend");
 		setCursorConn(() => {
 			const conn = peerInstanceCursor.current.connect(remotePeerId);
-			conn.on("open", () => {
-				console.log("Successfully connected to peer cursor backend");
-			});
 			return conn;
 		});
 	};
 
 	useEffect(() => {
 		if (cursorConn) {
-			//console.log("Sent data to peer cursor backend!");
-
 			const boundingBox = remoteVideoRef.current.getBoundingClientRect();
 
 			cursorConn.send({

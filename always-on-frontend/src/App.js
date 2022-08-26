@@ -35,6 +35,7 @@ function App() {
 
 	const handleStream = (stream) => {
 		let { width, height } = stream.getVideoTracks()[0].getSettings();
+		console.log("Screen Resolution", width, height);
 		setStreamScreenSize([width, height]);
 
 		streamRef.current.stream = stream;
@@ -103,15 +104,14 @@ function App() {
 	useEffect(() => {
 		if (cursorConn) {
 			const boundingBox = remoteVideoRef.current.getBoundingClientRect();
+			console.log("Video ref info", boundingBox);
 
 			cursorConn.send({
 				user: peerId, // todo: need a better id
 				data: {
 					point: myCursorLoc && [
-						((myCursorLoc[0] - boundingBox.x) * streamScreenSize[0]) /
-							boundingBox.width,
-						((myCursorLoc[1] - boundingBox.y) * streamScreenSize[1]) /
-							boundingBox.height,
+						(myCursorLoc[0] - boundingBox.x) / boundingBox.width,
+						(myCursorLoc[1] - boundingBox.y) / boundingBox.height,
 					],
 				},
 			});

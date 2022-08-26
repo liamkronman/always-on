@@ -6,4 +6,9 @@ contextBridge.exposeInMainWorld("electronAPI", {
 		ipcRenderer.removeAllListeners("SET_SOURCE_ID");
 		ipcRenderer.on("SET_SOURCE_ID", callback);
 	},
+    setCursorInfo: (cursorInfo) => ipcRenderer.send("setCursorInfo", cursorInfo),
+    onSetCursorInfo: (callback) => {
+        ipcRenderer.removeAllListeners("setCursorInfo");
+        ipcRenderer.on("setCursorInfo", callback);
+    },
 });

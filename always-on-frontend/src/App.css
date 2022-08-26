@@ -1,5 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
 .App {
   text-align: center;
+  background: linear-gradient(#4761E9, #46957D);
+  height: 100vh;
+  font-family: 'Space Grotesk', sans-serif;
+  color: white;
+  align-items: center;
+  justify-content: center;
 }
 
 .App-logo {
@@ -35,4 +43,86 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.alwayson-tag {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  color: #E9E9E9;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.login-container {
+  display: grid;
+  grid-template-rows: 1fr 1.5fr 1fr 1fr 1fr 1fr 1fr 0.25fr;
+  height: 76vh;
+  width: 80vw;
+  align-items: center;
+  margin-left: 10vw;
+}
+
+.auth-topline {
+  font-weight: bold;
+  font-size: 35px;
+}
+
+.auth-input-title {
+  font-weight: 500;
+  font-size: 19px;
+  text-align: left;
+}
+
+.auth-input-container {
+  width: 80vw;
+  justify-content: flex-start;
+  align-items: start;
+}
+
+.auth-input-area {
+  -webkit-appearance: none;
+  width: 95%;
+  height: 4.5vh;
+  outline: none;
+  border-radius: 8px;
+  border: 1px solid white;
+  background: #BDCAF8;
+  font-family: 'Space Grotesk', sans-serif;
+  font-style: 400;
+  font-size: 16px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.auth-submit-btn {
+  -webkit-appearance: none;
+  outline: none;
+  background: #5FC5FF;
+  border-radius: 8px;
+  border: 0 solid white;
+  color: white;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: bold;
+  font-size: 19px;
+  width: 100%;
+  height: 7vh;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.auth-submit-btn {
+  cursor: pointer;
+}
+
+.auth-already-tagline {
+  text-align: start;
+  font-weight: 400;
+  text-decoration: underline;
+}
+
+.auth-already-tagline:hover {
+  cursor: pointer;
 }

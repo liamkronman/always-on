@@ -16,7 +16,7 @@ const sendSelectedScreen = (id) => {
 };
 
 const createTray = () => {
-    let checkedId = availableScreens[0].id;
+	let checkedId = availableScreens[0].id;
 	const screensMenu = availableScreens.map((item) => {
 		return {
 			label: item.name,
@@ -24,8 +24,8 @@ const createTray = () => {
 				sendSelectedScreen(item.id);
                 checkedId = item.id;
 			},
-            type: 'radio',
-            checked: item.id === checkedId
+			type: "radio",
+			checked: item.id === checkedId,
 		};
 	});
 
@@ -146,3 +146,5 @@ const createWindow = () => {
 app.on("ready", () => {
 	createWindow();
 });
+
+app.on("before-quit", () => app.exit());

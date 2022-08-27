@@ -24,7 +24,7 @@ function App() {
 		<div className="App">
 			{
 				token
-				? <VideoPage setToken={setToken} token={token} connect={connect} addFriendReqListener={addFriendReqListener} addStatusListener={addStatusListener} />
+				? <VideoPage setToken={setToken} token={token} addFriendReqListener={addFriendReqListener} addStatusListener={addStatusListener} />
 				: <Auth setToken={setToken} />
 			}
 		</div>

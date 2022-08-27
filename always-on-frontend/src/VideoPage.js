@@ -7,7 +7,6 @@ import { Search } from 'react-feather';
 function VideoPage(props) {
 	const setToken = props.setToken;
 	const token = props.token;
-	const connect = props.connect;
 	const addFriendReqListener = props.addFriendReqListener;
 	const addStatusListener = props.addStatusListener;
 	const [peerId, setPeerId] = useState("");
@@ -25,6 +24,7 @@ function VideoPage(props) {
 	const [friendRequests, setFriendRequests] = useState([]);
 	const [activeFriends, setActiveFriends] = useState([]);
 	const [inactiveFriends, setInactiveFriends] = useState([]);
+	const [searchUsername, setSearchUsername] = useState("");
 
 	const getStream = async (screenId) => {
 		try {
@@ -201,7 +201,8 @@ function VideoPage(props) {
 				</div>
 				<div className="friend-list-container">
 					<div className="main-search-container">
-						<input />
+						<input value={searchUsername} onChange={(e) => setSearchUsername(e.target.value)} placeholder="Find a friend..." />
+						{/* Search should call a backend function when clicked that finds queried user */}
 						<Search color="white" size={20} className="main-search-btn" />
 					</div>
 					{

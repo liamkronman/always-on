@@ -14,10 +14,10 @@ function VideoPage(props) {
 	const token = props.token;
 	const addFriendReqListener = props.addFriendReqListener;
 	const addStatusListener = props.addStatusListener;
-    const addConnectListener = props.addConnectListener;
+	const addConnectListener = props.addConnectListener;
 	const removeFriendReqListener = props.removeFriendReqListener;
 	const removeStatusListener = props.removeStatusListener;
-    const removeConnectListener = props.removeConnectListener;
+	const removeConnectListener = props.removeConnectListener;
 	const [peerId, setPeerId] = useState("");
 	const streamRef = useRef({ stream: null });
 	const remoteVideoRef = useRef(null);
@@ -204,16 +204,16 @@ function VideoPage(props) {
 	}, [cursorInputContent, handleKeyPress]);
 
 	useEffect(() => {
-        const connectListener = () => {
-            setActiveFriends([]);
-            setInactiveFriends([]);
-            setFriendRequests([]);
-        };
+		const connectListener = () => {
+			setActiveFriends([]);
+			setInactiveFriends([]);
+			setFriendRequests([]);
+		};
 
 		const friendReqListener = (username) =>
 			setFriendRequests((friendReqs) => [...friendReqs, username]);
 		addFriendReqListener(friendReqListener);
-        addConnectListener(connectListener);
+		addConnectListener(connectListener);
 
 		const statusListener = ({ type, username }) => {
 			console.log("I have listened to an event!");
@@ -235,7 +235,7 @@ function VideoPage(props) {
 		return () => {
 			removeFriendReqListener(friendReqListener);
 			removeStatusListener(statusListener);
-            removeConnectListener(connectListener);
+			removeConnectListener(connectListener);
 		};
 	}, []);
 
@@ -403,7 +403,10 @@ function VideoPage(props) {
 					>
 						Log out
 					</button>
-					<div className="main-alwayson-title">AlwaysOn</div>
+					<div className="main-alwayson-title">
+						<img height="24px" src="./alwayson-icon.png" alt="AlwaysOn Logo" />
+						<h1>AlwaysOn</h1>
+					</div>
 				</div>
 				<div className="friend-list-container">
 					<div className="main-search-container">

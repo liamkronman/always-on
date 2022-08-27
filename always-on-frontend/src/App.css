@@ -151,17 +151,26 @@
 .left-main-tray {
 	display: grid;
 	grid-template-rows: 1fr 11fr;
-    max-height: 100vh;
+	max-height: 100vh;
+	min-width: 250px;
 }
 
 .main-alwayson-title {
 	position: absolute;
-	left: 2vw;
-	top: 2vh;
+	left: 12px;
+	top: 12px;
 	color: #e9e9e9;
-	font-size: 18px;
+	font-size: 20px;
 	font-weight: bold;
 	text-align: left;
+	display: flex;
+	flex-direction: row;
+}
+
+.main-alwayson-title h1 {
+	font-size: inherit;
+	font-weight: inherit;
+	margin: 0;
 }
 
 .main-top-left-container {
@@ -188,11 +197,9 @@
 }
 
 .friend-list-container {
-	padding-left: 2vw;
-	padding-right: 2vw;
-	padding-top: 2vh;
+	padding: 20px;
 	overflow-y: auto;
-    overflow-x: hidden;
+	overflow-x: hidden;
 }
 
 .main-search-container {

@@ -30,9 +30,16 @@ export const PlayerCursor = (props) => {
 				flexDirection: "column",
 				top: props.point ? props.point[1] : 0,
 				left: props.point ? props.point[0] : 0,
-				zIndex: -2,
+				zIndex: 1,
+				pointerEvents: "none",
 			}}
-			className="playercursor"
+			className={
+				((props.isEditingCursor &&
+					props.cursorInputContent === "" &&
+					"hidden ") ||
+					(props.fading && "fading ") ||
+					"") + "playercursor"
+			}
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +48,6 @@ export const PlayerCursor = (props) => {
 				fillRule="evenodd"
 				width="20"
 				height="30"
-				style={props.isEditingCursor ? { opacity: "0" } : {}}
 			>
 				<g fill="rgba(0,0,0,.2)" transform="translate(1,1)">
 					<path d="m12 24.4219v-16.015l11.591 11.619h-6.781l-.411.124z" />

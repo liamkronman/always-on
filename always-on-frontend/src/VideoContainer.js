@@ -7,7 +7,9 @@ function VideoContainer(props) {
 	const username = props.username;
 	return (
 		<div className="video-container">
-			<input className="video-container-leave" type="button" value="Leave" />
+			{username && (
+				<input className="video-container-leave" type="button" value="Leave" />
+			)}
 			<div>
 				<h1>
 					{(username && `${username}'s stream`) || "Join a friend's stream!"}

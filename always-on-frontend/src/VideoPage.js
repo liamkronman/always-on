@@ -5,6 +5,9 @@ import axios from "axios";
 import { Search } from "react-feather";
 import VideoContainer from "./VideoContainer";
 
+const TIME_FRESH = 5000;
+const TIME_FADE = 5000;
+
 function VideoPage(props) {
 	const setToken = props.setToken;
 	const token = props.token;
@@ -17,12 +20,15 @@ function VideoPage(props) {
 	const streamRef = useRef({ stream: null });
 	const remoteVideoRef = useRef(null);
 	const peerInstance = useRef(null);
-	const [myCursorLoc, setMyCursorLoc] = useState();
 	const [mediaConn, setMediaConn] = useState();
 	const [cursorConn, setCursorConn] = useState();
 	const [streamScreenSize, setStreamScreenSize] = useState([800, 600]);
+	const [myCursorLoc, setMyCursorLoc] = useState();
 	const myCursorInputRef = useRef();
 	const [cursorInputContent, setCursorInputContent] = useState("");
+	const [cursorInputLastRefresh, setCursorInputLastRefresh] = useState(-1);
+	const [cursorInputContentIsFading, setCursorInputContentIsFading] =
+		useState(false);
 	const audioRef = useRef(null);
 	const [friendRequests, setFriendRequests] = useState([]);
 	const [activeFriends, setActiveFriends] = useState([]);
@@ -161,18 +167,28 @@ function VideoPage(props) {
 	}, [peerId, cursorConn, myCursorLoc, streamScreenSize, cursorInputContent]);
 
 	// https://devtrium.com/posts/how-keyboard-shortcut
-	const handleKeyPress = useCallback((event) => {
-		if (event.key === "Enter") {
-			if (
-				document.activeElement === document.body ||
-				document.activeElement === myCursorInputRef.current
-			) {
-				setCursorInputContent("");
-				myCursorInputRef.current.focus();
-				event.preventDefault();
+	const handleKeyPress = useCallback(
+		(event) => {
+			if (event.key === "Enter") {
+				if (
+					document.activeElement === myCursorInputRef.current &&
+					cursorInputContent === ""
+				) {
+					// toggle
+					myCursorInputRef.current.blur();
+					event.preventDefault();
+				} else if (
+					document.activeElement === document.body ||
+					document.activeElement === myCursorInputRef.current
+				) {
+					setCursorInputContent("");
+					myCursorInputRef.current.focus();
+					event.preventDefault();
+				}
 			}
-		}
-	}, []);
+		},
+		[cursorInputContent]
+	);
 
 	useEffect(() => {
 		// attach the event listener
@@ -182,7 +198,7 @@ function VideoPage(props) {
 		return () => {
 			document.removeEventListener("keydown", handleKeyPress);
 		};
-	}, [handleKeyPress]);
+	}, [cursorInputContent, handleKeyPress]);
 
 	useEffect(() => {
 		const friendReqListener = (username) =>
@@ -230,6 +246,54 @@ function VideoPage(props) {
 			});
 	}
 
+	useEffect(() => {
+		const id = setInterval(() => {
+			const timenow = Date.now();
+
+			if (timenow > cursorInputLastRefresh + TIME_FRESH + TIME_FADE) {
+				setCursorInputContentIsFading((prev) => {
+					if (prev) {
+						setCursorInputContent("");
+						myCursorInputRef.current.blur();
+						if (cursorConn)
+							cursorConn.send({
+								user: peerId,
+								data: { fading: false, content: "" }, // `fading: false` is optional
+							});
+					}
+					return false;
+				});
+			} else if (timenow > cursorInputLastRefresh + TIME_FRESH) {
+				setCursorInputContentIsFading((prev) => {
+					if (!prev && cursorConn)
+						cursorConn.send({
+							user: peerId,
+							data: {
+								fading: true,
+							},
+						});
+					return true;
+				});
+			}
+		}, 501);
+		return () => clearInterval(id);
+	}, [cursorConn, cursorInputContentIsFading, cursorInputLastRefresh, peerId]);
+
+	const refreshChat = (text) => {
+		setCursorInputContent(text);
+		const timenow = Date.now();
+		setCursorInputContentIsFading(false);
+		if (cursorConn)
+			cursorConn.send({
+				user: peerId,
+				data: {
+					fading: false,
+					content: text,
+				},
+			});
+		setCursorInputLastRefresh(timenow);
+	};
+
 	const handleSearchPress = () => {
 
 	}
@@ -254,8 +318,8 @@ function VideoPage(props) {
 						<input
 							value={searchUsername}
 							onChange={(e) => setSearchUsername(e.target.value)}
-							onKeyPress={e => {
-								if (e.key === 'Enter') searchForUser()
+							onKeyPress={(e) => {
+								if (e.key === "Enter") searchForUser();
 							}}
 							placeholder="Find a friend..."
 						/>
@@ -265,7 +329,7 @@ function VideoPage(props) {
 							size={20}
 							className="main-search-btn"
 							onClick={() => {
-								searchForUser()
+								searchForUser();
 							}}
 						/>
 					</div>
@@ -275,7 +339,7 @@ function VideoPage(props) {
 								return (
 									<div className="searched-user-container">
 										<div className="searched-username">{val.username}</div>
-										<button className="searched-btn follow-searched-btn" onClick={handleSearchPress}>Request</button>
+										<button className="searched-btn follow-searched-btn">Follow</button>
 									</div>
 								);
 							})}
@@ -302,12 +366,11 @@ function VideoPage(props) {
 				point={myCursorLoc}
 				isEditingCursor
 				cursorInputContent={cursorInputContent}
-				setCursorInputContent={setCursorInputContent}
+				setCursorInputContent={refreshChat}
 				myCursorInputRef={myCursorInputRef}
+				fading={cursorInputContentIsFading}
 				fillColor="rgb(100, 250, 50)"
-			>
-				Text
-			</PlayerCursor>
+			/>
 		</div>
 	);
 }

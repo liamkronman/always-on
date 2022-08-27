@@ -7,6 +7,9 @@ import { Search } from 'react-feather';
 function VideoPage(props) {
 	const setToken = props.setToken;
 	const token = props.token;
+	const connect = props.connect;
+	const addFriendReqListener = props.addFriendReqListener;
+	const addStatusListener = props.addStatusListener;
 	const [peerId, setPeerId] = useState("");
 	const [remotePeerIdValue, setRemotePeerIdValue] = useState("");
 	const streamRef = useRef({ stream: null });
@@ -19,6 +22,9 @@ function VideoPage(props) {
 	const myCursorInputRef = useRef();
 	const [cursorInputContent, setCursorInputContent] = useState("");
     const audioRef = useRef(null);
+	const [friendRequests, setFriendRequests] = useState([]);
+	const [activeFriends, setActiveFriends] = useState([]);
+	const [inactiveFriends, setInactiveFriends] = useState([]);
 
 	const getStream = async (screenId) => {
 		try {
@@ -167,6 +173,20 @@ function VideoPage(props) {
 		};
 	}, [handleKeyPress]);
 
+	useEffect(() => {
+		addFriendReqListener((username) => setFriendRequests(friendReqs => [...friendReqs, username]));
+
+		addStatusListener((type, username) => {
+			if (type === 'on') {
+				setActiveFriends(friends => [...friends, username]);
+				setInactiveFriends(friends => friends.filter(ele => ele !== username));
+			} else if (type === 'off') {
+				setInactiveFriends(friends => [...friends, username]);
+				setActiveFriends(friends => friends.filter(ele => ele !== username));
+			}
+		})
+	}, []);
+
 	return (
 		<div className="main-container">
 			<div className="left-main-tray">
@@ -184,6 +204,12 @@ function VideoPage(props) {
 						<input />
 						<Search color="white" size={20} className="main-search-btn" />
 					</div>
+					{
+						friendRequests.length > 0 && 
+						<div>
+
+						</div>
+					}
 
 
 					{/* <input

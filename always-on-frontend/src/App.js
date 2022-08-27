@@ -8,7 +8,7 @@ import useSocket from './useSocket';
 
 function App() {
 	const [token, setToken] = useState(null);
-    const { connect, addFriendReqListener } = useSocket();
+    const { connect, addFriendReqListener, addStatusListener } = useSocket();
 
 	// check if authenticated on load
 	useEffect(() => {
@@ -24,7 +24,7 @@ function App() {
 		<div className="App">
 			{
 				token
-				? <VideoPage setToken={setToken} token={token} />
+				? <VideoPage setToken={setToken} token={token} connect={connect} addFriendReqListener={addFriendReqListener} addStatusListener={addStatusListener} />
 				: <Auth setToken={setToken} />
 			}
 		</div>

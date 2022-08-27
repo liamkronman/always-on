@@ -6,6 +6,11 @@ const TIME_FRESH = 5000;
 const TIME_FADE = 5000;
 
 function VideoPage({ setToken }) {
+	const setToken = props.setToken;
+	const token = props.token;
+	const addFriendReqListener = props.addFriendReqListener;
+	const addStatusListener = props.addStatusListener;
+
 	const [peerId, setPeerId] = useState("");
 	const [remotePeerIdValue, setRemotePeerIdValue] = useState("");
 	const streamRef = useRef({ stream: null });
@@ -20,9 +25,14 @@ function VideoPage({ setToken }) {
 	const [cursorInputContent, setCursorInputContent] = useState("");
 	const [cursorInputLastRefresh, setCursorInputLastRefresh] = useState(-1);
 	const [cursorInputContentIsFading, setCursorInputContentIsFading] =
-		useState(false);
 
 	const audioRef = useRef(null);
+
+	const [friendRequests, setFriendRequests] = useState([]);
+	const [activeFriends, setActiveFriends] = useState([]);
+	const [inactiveFriends, setInactiveFriends] = useState([]);
+	const [searchUsername, setSearchUsername] = useState("");
+
 
 	const getStream = async (screenId) => {
 		try {
@@ -62,17 +72,37 @@ function VideoPage({ setToken }) {
 
 	useEffect(() => {
 		window.electronAPI.setMenu(true);
+		window.electronAPI.setSize({ width: 1000, height: 750 });
 
 		const peer = new Peer();
 
 		peer.on("open", (id) => {
 			setPeerId(id);
+			axios
+				.post(
+					`http://${process.env.REACT_APP_BACKEND}/api/user/setPeerId`,
+					{
+						peerId: id,
+					},
+					{
+						headers: {
+							"x-access-token": token,
+						},
+					}
+				)
+				.then((resp) => {
+					console.log("peer id successfully sent to server");
+				})
+				.catch((err) => {
+					console.log(err.message);
+				});
 		});
 
 		peer.on("connection", (conn) =>
 			conn.on("data", (data) => window.electronAPI.setCursorInfo(data))
 		);
 
+		const calls = [];
 		peer.on("call", async (call) => {
 			call.answer(streamRef.current.stream);
 
@@ -80,14 +110,19 @@ function VideoPage({ setToken }) {
 				audioRef.current.srcObject = viewerStream;
 				audioRef.current.autoplay = true;
 			});
+			
+			calls.push(call);
 		});
 
 		peerInstance.current = peer;
 
 		return () => {
 			window.electronAPI.setMenu(false);
+			console.log("Disconnecting...");
+			// for some reason peer.destroy only closes data connections, not calls
 			peer.destroy();
-		};
+			calls.forEach((call) => call.close());
+	};
 	}, []);
 
 	const call = async (remotePeerId) => {
@@ -161,54 +196,6 @@ function VideoPage({ setToken }) {
 			document.removeEventListener("keydown", handleKeyPress);
 		};
 	}, [handleKeyPress]);
-
-	useEffect(() => {
-		const id = setInterval(() => {
-			const timenow = Date.now();
-
-			if (timenow > cursorInputLastRefresh + TIME_FRESH + TIME_FADE) {
-				setCursorInputContentIsFading((prev) => {
-					if (prev) {
-						setCursorInputContent("");
-						myCursorInputRef.current.blur();
-						if (cursorConn)
-							cursorConn.send({
-								user: peerId,
-								data: { fading: false, content: "" }, // `fading: false` is optional
-							});
-					}
-					return false;
-				});
-			} else if (timenow > cursorInputLastRefresh + TIME_FRESH) {
-				setCursorInputContentIsFading((prev) => {
-					if (!prev && cursorConn)
-						cursorConn.send({
-							user: peerId,
-							data: {
-								fading: true,
-							},
-						});
-					return true;
-				});
-			}
-		}, 501);
-		return () => clearInterval(id);
-	}, [cursorConn, cursorInputContentIsFading, cursorInputLastRefresh, peerId]);
-
-	const refreshChat = (text) => {
-		setCursorInputContent(text);
-		const timenow = Date.now();
-		setCursorInputContentIsFading(false);
-		if (cursorConn)
-			cursorConn.send({
-				user: peerId,
-				data: {
-					fading: false,
-					content: text,
-				},
-			});
-		setCursorInputLastRefresh(timenow);
-	};
 
 	return (
 		<div className="App">

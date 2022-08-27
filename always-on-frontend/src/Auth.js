@@ -16,6 +16,8 @@ function Auth({ setToken }) {
     const loginUsernameRef = useRef();
 
     useEffect(() => {
+        window.electronAPI.setSize({ width: 430, height: 800 });
+
         signupUsernameRef.current.focus();
     }, []);
 
@@ -49,13 +51,13 @@ function Auth({ setToken }) {
                             setSignupErrorMsg("");
                             if (signupUsername && signupEmail && signupPassword && signupConfirmPassword) {
                                 if (signupPassword === signupConfirmPassword) {
-                                    axios.post("http://159.223.143.90/api/auth/signup", {
+                                    axios.post(`http://${process.env.REACT_APP_BACKEND}/api/auth/signup`, {
                                         username: signupUsername,
                                         email: signupEmail,
                                         password: signupPassword
                                     })
                                     .then(resp => {
-                                        axios.post("http://159.223.143.90/api/auth/signin", {
+                                        axios.post(`http://${process.env.REACT_APP_BACKEND}/api/auth/signin`, {
                                             username: signupUsername,
                                             password: signupPassword
                                         })
@@ -96,16 +98,16 @@ function Auth({ setToken }) {
                     <div className="auth-error-msg">{loginErrorMsg}</div>
                     <div className="auth-input-container">
                         <div className="auth-input-title">Username</div>
-                        <input className="auth-input-area" type="text" name="username" placeholder="Set a username." value={loginUsername} ref={loginUsernameRef} onChange={(e) => setLoginUsername(e.target.value)} />
+                        <input className="auth-input-area" type="text" name="username" placeholder="Enter your username." value={loginUsername} ref={loginUsernameRef} onChange={(e) => setLoginUsername(e.target.value)} />
                     </div>
                     <div className="auth-input-container">
                         <div className="auth-input-title">Password</div>
-                        <input className="auth-input-area" type="password" name="password" placeholder="Set a password." value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} />
+                        <input className="auth-input-area" type="password" name="password" placeholder="Enter your password." value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} />
                     </div>
                     <button className="auth-submit-btn" onClick={() => {
                         setLoginErrorMsg("");
                         if (loginUsername && loginPassword) {
-                            axios.post("http://159.223.143.90/api/auth/signin", {
+                            axios.post(`http://${process.env.REACT_APP_BACKEND}/api/auth/signin`, {
                                 username: loginUsername,
                                 password: loginPassword
                             })

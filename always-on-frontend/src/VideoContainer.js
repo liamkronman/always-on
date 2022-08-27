@@ -26,14 +26,13 @@ function VideoContainer(props) {
 						}
 						onMouseLeave={(event) => setMyCursorLoc(undefined)}
 						ref={remoteVideoRef}
-						style={{
-							position: "absolute",
-							...((username === undefined && {
+						style={
+							username === undefined && {
+								position: "absolute",
 								opacity: 0,
 								maxHeight: "1px",
-							}) ||
-								{}),
-						}}
+							}
+						}
 					/>
 				</div>
 			</div>

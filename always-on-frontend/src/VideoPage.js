@@ -211,6 +211,25 @@ function VideoPage(props) {
 		};
 	}, []);
 
+	function searchForUser() {
+		axios
+			.post(
+				`http://${process.env.REACT_APP_BACKEND}/api/user/searchUser`,
+				{
+					searchUsername: searchUsername,
+				},
+				{
+					headers: {
+						"x-access-token": token,
+					},
+				}
+			)
+			.then((resp) => {
+				setSearchedUsers(resp.data.users);
+				console.log(searchedUsers);
+			});
+	}
+
 	return (
 		<div className="main-container">
 			<div className="left-main-tray">
@@ -231,6 +250,9 @@ function VideoPage(props) {
 						<input
 							value={searchUsername}
 							onChange={(e) => setSearchUsername(e.target.value)}
+							onKeyPress={e => {
+								if (e.key === 'Enter') searchForUser()
+							}}
 							placeholder="Find a friend..."
 						/>
 						{/* Search should call a backend function when clicked that finds queried user */}
@@ -239,22 +261,7 @@ function VideoPage(props) {
 							size={20}
 							className="main-search-btn"
 							onClick={() => {
-								axios
-									.post(
-										`http://${process.env.REACT_APP_BACKEND}/api/user/searchUser`,
-										{
-											searchUsername: searchUsername,
-										},
-										{
-											headers: {
-												"x-access-token": token,
-											},
-										}
-									)
-									.then((resp) => {
-										setSearchedUsers(resp.data.users);
-										console.log(searchedUsers);
-									});
+								searchForUser()
 							}}
 						/>
 					</div>
@@ -263,7 +270,8 @@ function VideoPage(props) {
 							{searchedUsers.map((val, index) => {
 								return (
 									<div className="searched-user-container">
-										<div>{val.username}</div>
+										<div className="searched-username">{val.username}</div>
+										<button className="searched-btn follow-searched-btn">Follow</button>
 									</div>
 								);
 							})}

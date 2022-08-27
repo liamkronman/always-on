@@ -190,6 +190,7 @@
   padding-left: 2vw;
   padding-right: 2vw;
   padding-top: 2vh;
+  overflow-y: scroll;
 }
 
 .main-search-container {
@@ -214,5 +215,21 @@
 }
 
 .main-search-btn {
+  cursor: pointer;
+}
+
+.searched-user-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: space-evenly;
+  height: 5vh;
+  align-items: center;
+}
+
+.searched-username {
+  text-align: left;
+}
+
+.searched-btn {
   cursor: pointer;
 }

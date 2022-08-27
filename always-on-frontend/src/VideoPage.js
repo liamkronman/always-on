@@ -2,7 +2,7 @@ import { useRef, useEffect, useCallback, useState } from "react";
 import { PlayerCursor } from "./Cursor";
 import Peer from "peerjs";
 import axios from "axios";
-import { Search } from "react-feather";
+import { Search, Check, X } from "react-feather";
 import VideoContainer from "./VideoContainer";
 import { FriendGroup, Friend, FriendReq } from "./FriendTab";
 
@@ -295,21 +295,26 @@ function VideoPage(props) {
 	};
 
 	function handleSearchPress(index) {
-		axios.post(`http://${process.env.REACT_APP_BACKEND}/api/user/requestFriend`, {
-			friendUsername: searchedUsers[index].username
-		}, {
-			headers: {
-				"x-access-token": token
-			}
-		})
-		.then(() => {
-			setSearchedUsers(users => {
-				let newUsers = [...users];
-				newUsers[index]["relationStatus"] = "Requested";
-				return newUsers;
+		axios
+			.post(
+				`http://${process.env.REACT_APP_BACKEND}/api/user/requestFriend`,
+				{
+					friendUsername: searchedUsers[index].username,
+				},
+				{
+					headers: {
+						"x-access-token": token,
+					},
+				}
+			)
+			.then(() => {
+				setSearchedUsers((users) => {
+					let newUsers = [...users];
+					newUsers[index]["relationStatus"] = "Requested";
+					return newUsers;
+				});
 			});
-		})
-	};
+	}
 
 	return (
 		<div className="main-container">
@@ -352,40 +357,62 @@ function VideoPage(props) {
 								return (
 									<div className="searched-user-container">
 										<div className="searched-username">{val.username}</div>
-										{
-											val.relationStatus === "None"
-											? <button className="searched-btn request-searched-btn" onClick={() => handleSearchPress(index)}>Request</button>
-											: val.relationStatus === "Requested"
-											? <button className="searched-btn requested-searched-btn">Requested</button>
-											: val.relationStatus === "Being requested"
-											? <div></div>
-											: <button className="searched-btn friends-searched-btn">Friends</button>
-										}
+										{val.relationStatus === "None" ? (
+											<button
+												className="searched-btn request-searched-btn"
+												onClick={() => handleSearchPress(index)}
+											>
+												Request
+											</button>
+										) : val.relationStatus === "Requested" ? (
+											<button className="searched-btn requested-searched-btn">
+												Requested
+											</button>
+										) : val.relationStatus === "Being requested" ? (
+											<div>
+												<Check
+													color="rgb(150, 255, 150)"
+													size={20}
+													className="request-icon"
+												/>
+												<X
+													color="rgb(255, 150, 150)"
+													size={20}
+													className="request-icon"
+												/>
+											</div>
+										) : (
+											<button className="searched-btn friends-searched-btn">
+												Friends
+											</button>
+										)}
 									</div>
 								);
 							})}
 						</div>
 					)}
-					{Object.keys(activeFriends).length > 0 && (
+					{activeFriends.length > 0 && (
 						<FriendGroup groupName="online">
 							{activeFriends.map((val, index) => (
 								<Friend username={val} key={index} />
 							))}
 						</FriendGroup>
 					)}
-					{Object.keys(inactiveFriends).length > 0 && (
+					{inactiveFriends.length > 0 && (
 						<FriendGroup groupName="inactive">
 							{inactiveFriends.map((val, index) => (
 								<Friend username={val} key={index} />
 							))}
 						</FriendGroup>
 					)}
-					<FriendGroup groupName="pending">
-						<FriendReq username="liam" />
-						<FriendReq username="william" />
-						<FriendReq username="siyong" />
-						<FriendReq username="jerry" />
-					</FriendGroup>
+					{friendRequests.length > 0 && (
+						<FriendGroup groupName="pending">
+							{friendRequests.map((val, index) => {
+								console.log(val);
+								return <FriendReq username={val} key={index} />;
+							})}
+						</FriendGroup>
+					)}
 
 					{/* <input
 						type="text"

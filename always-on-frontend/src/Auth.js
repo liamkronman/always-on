@@ -26,7 +26,10 @@ function Auth({ setToken }) {
             {
                 displaySignup
                 ? <>
-                    <div className="alwayson-tag">AlwaysOn</div>
+                    <div className="alwayson-tag">
+						<img height="24px" src="./alwayson-icon.png" alt="AlwaysOn Logo" />
+						<h1>AlwaysOn</h1>
+                    </div>
                     <div className="signup-container">
                         <div></div>
                         <div className="auth-topline">Sign Up</div>
@@ -91,7 +94,10 @@ function Auth({ setToken }) {
                     </div>
                 </>
                 : <>
-                <div className="alwayson-tag">AlwaysOn</div>
+                <div className="alwayson-tag">
+					<img height="24px" src="./alwayson-icon.png" alt="AlwaysOn Logo" />
+					<h1>AlwaysOn</h1>
+                </div>
                 <div className="login-container">
                     <div></div>
                     <div className="auth-topline">Log In</div>

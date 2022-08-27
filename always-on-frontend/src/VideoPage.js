@@ -51,6 +51,8 @@ function VideoPage() {
 	});
 
 	useEffect(() => {
+        window.electronAPI.setMenu(true);
+
 		const peer = new Peer();
 
 		peer.on("open", (id) => {
@@ -72,7 +74,10 @@ function VideoPage() {
 
 		peerInstance.current = peer;
 
-		return () => peer.destroy();
+		return () => {
+            window.electronAPI.setMenu(false);
+            peer.destroy();
+        };
 	}, []);
 
 	const call = async (remotePeerId) => {

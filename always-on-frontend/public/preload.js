@@ -11,4 +11,5 @@ contextBridge.exposeInMainWorld("electronAPI", {
         ipcRenderer.removeAllListeners("setCursorInfo");
         ipcRenderer.on("setCursorInfo", callback);
     },
+    setMenu: (menu) => ipcRenderer.send("setMenu", menu),
 });

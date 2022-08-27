@@ -19,7 +19,7 @@ html {
 }
 
 .playercursor p {
-  overflow-wrap: break-word;
+	overflow-wrap: break-word;
 
 	-moz-user-select: -moz-none;
 	-khtml-user-select: none;
@@ -48,7 +48,7 @@ html {
 	/* border: 1px solid var(--color-green); */
 }
 .playercursor p:before {
-  transform: translatey(0px);
+	transform: translatey(0px);
 	animation: float2 5s ease-in-out infinite;
 	content: "";
 	font-weight: bold;
@@ -126,20 +126,27 @@ html {
 	outline: none;
 }
 
-.playercursor p textarea{
-  background: transparent;
-  border: none;
-  font-family: inherit;
-  outline: none;
-  resize: none;
-  color: inherit;
-  font-weight: inherit;
-  padding: none;
-  margin: none;
+.playercursor p textarea {
+	background: transparent;
+	border: none;
+	font-family: inherit;
+	outline: none;
+	resize: none;
+	color: inherit;
+	font-weight: inherit;
+	padding: none;
+	margin: none;
 }
 
 .fading {
 	animation: fading 2s normal infinite;
+}
+
+.hidden {
+	opacity: 0;
+}
+.hidden:focus-within {
+	opacity: 100;
 }
 
 @keyframes float {

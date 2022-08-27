@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useRef, useEffect, useCallback, useState } from "react";
 
-function Auth({setToken}) {
+function Auth({ setToken }) {
     const [displaySignup, setDisplaySignup] = useState(true);
     const [signupUsername, setSignupUsername] = useState("");
 	const [signupEmail, setSignupEmail] = useState("");

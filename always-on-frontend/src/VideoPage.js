@@ -2,7 +2,7 @@ import { useRef, useEffect, useCallback, useState } from "react";
 import { PlayerCursor } from "./Cursor";
 import Peer from "peerjs";
 
-function VideoPage() {
+function VideoPage({ setToken }) {
 	const [peerId, setPeerId] = useState("");
 	const [remotePeerIdValue, setRemotePeerIdValue] = useState("");
 	const streamRef = useRef({ stream: null });
@@ -146,6 +146,10 @@ function VideoPage() {
 	return (
 		<div className="App">
 			<h1>Current user id is {peerId}</h1>
+			<button onClick={() => {
+				localStorage.setItem("accessToken", "");
+				setToken(null);
+			}}>Log out</button> 
 			<input
 				type="text"
 				value={remotePeerIdValue}

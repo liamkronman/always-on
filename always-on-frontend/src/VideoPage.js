@@ -253,7 +253,7 @@ function VideoPage(props) {
 				}
 			)
 			.then((resp) => {
-				setSearchedUsers(resp.data.users);
+				setSearchedUsers(resp.data.users.filter(user => user.relationStatus !== 'self'));
 			});
 	}
 

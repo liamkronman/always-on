@@ -87,3 +87,7 @@ typings/
 
 # Electron-Forge
 out/
+
+# Scripts
+run_electron_remote.sh
+run_electron_local.sh

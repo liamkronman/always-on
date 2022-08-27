@@ -185,6 +185,7 @@
 	border-bottom: 1px solid white;
 	display: flex;
 	flex-direction: row-reverse;
+	min-height: 48px;
 }
 
 .main-logout-btn {
@@ -212,7 +213,7 @@
 
 .main-search-container {
 	width: 100%;
-	height: 4vh;
+	height: 28px;
 	background: #bdcaf8;
 	display: grid;
 	grid-template-columns: 6fr 1fr;
@@ -224,7 +225,6 @@
 
 .main-search-container > input {
 	background: transparent;
-	min-width: 1vw;
 	border: none;
 	outline: none;
 	padding-left: 6px;
@@ -240,7 +240,7 @@
 	display: flex;
 	grid-template-columns: 1fr 1fr;
 	justify-content: space-between;
-	height: 5vh;
+	height: 36px;
 	align-items: center;
 }
 

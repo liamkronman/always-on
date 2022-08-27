@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useRef, useEffect, useCallback, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 
 function Auth({ setToken }) {
     const [displaySignup, setDisplaySignup] = useState(true);

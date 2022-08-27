@@ -10,6 +10,8 @@ function VideoPage(props) {
 	const token = props.token;
 	const addFriendReqListener = props.addFriendReqListener;
 	const addStatusListener = props.addStatusListener;
+	const removeFriendReqListener = props.removeFriendReqListener;
+	const removeStatusListener = props.removeStatusListener;
 	const [peerId, setPeerId] = useState("");
 	const [remotePeerIdValue, setRemotePeerIdValue] = useState("");
 	const streamRef = useRef({ stream: null });
@@ -26,6 +28,7 @@ function VideoPage(props) {
 	const [activeFriends, setActiveFriends] = useState([]);
 	const [inactiveFriends, setInactiveFriends] = useState([]);
 	const [searchUsername, setSearchUsername] = useState("");
+	const [searchedUsers, setSearchedUsers] = useState([]);
 
 	const getStream = async (screenId) => {
 		try {
@@ -182,11 +185,11 @@ function VideoPage(props) {
 	}, [handleKeyPress]);
 
 	useEffect(() => {
-		addFriendReqListener((username) =>
-			setFriendRequests((friendReqs) => [...friendReqs, username])
-		);
+		const friendReqListener = (username) =>
+			setFriendRequests((friendReqs) => [...friendReqs, username]);
+		addFriendReqListener(friendReqListener);
 
-		addStatusListener((type, username) => {
+		const statusListener = ({ type, username }) => {
 			if (type === "on") {
 				setActiveFriends((friends) => [...friends, username]);
 				setInactiveFriends((friends) =>
@@ -198,7 +201,14 @@ function VideoPage(props) {
 					friends.filter((ele) => ele !== username)
 				);
 			}
-		});
+		};
+
+		addStatusListener(statusListener);
+
+		return () => {
+			removeFriendReqListener(friendReqListener);
+			removeStatusListener(statusListener);
+		};
 	}, []);
 
 	return (
@@ -224,8 +234,41 @@ function VideoPage(props) {
 							placeholder="Find a friend..."
 						/>
 						{/* Search should call a backend function when clicked that finds queried user */}
-						<Search color="white" size={20} className="main-search-btn" />
+						<Search
+							color="white"
+							size={20}
+							className="main-search-btn"
+							onClick={() => {
+								axios
+									.post(
+										`http://${process.env.REACT_APP_BACKEND}/api/user/searchUser`,
+										{
+											searchUsername: searchUsername,
+										},
+										{
+											headers: {
+												"x-access-token": token,
+											},
+										}
+									)
+									.then((resp) => {
+										setSearchedUsers(resp.data.users);
+										console.log(searchedUsers);
+									});
+							}}
+						/>
 					</div>
+					{searchedUsers.length > 0 && (
+						<div>
+							{searchedUsers.map((val, index) => {
+								return (
+									<div className="searched-user-container">
+										<div>{val.username}</div>
+									</div>
+								);
+							})}
+						</div>
+					)}
 					{friendRequests.length > 0 && <div></div>}
 
 					{/* <input

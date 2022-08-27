@@ -22,61 +22,67 @@ const createTray = () => {
 			label: item.name,
 			click: () => {
 				sendSelectedScreen(item.id);
-                checkedId = item.id;
+				checkedId = item.id;
 			},
 			type: "radio",
 			checked: item.id === checkedId,
 		};
 	});
 
-    const baseTemplate = [{
-        label: app.name,
-        submenu: [{ role: "quit" }],
-    },
-    {
-        label: "Application",
-        submenu: [
-            {
-                label: "About Application",
-                selector: "orderFrontStandardAboutPanel:",
-            },
-            { type: "separator" },
-            {
-                label: "Quit",
-                accelerator: "Command+Q",
-                click: function () {
-                    app.quit();
-                },
-            },
-        ],
-    },
-    {
-        label: "Edit",
-        submenu: [
-            { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
-            { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
-            { type: "separator" },
-            { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
-            { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
-            { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
-            {
-                label: "Select All",
-                accelerator: "CmdOrCtrl+A",
-                selector: "selectAll:",
-            },
-        ],
-    }];
-	const baseMenu = Menu.buildFromTemplate(baseTemplate), menuWithScreens = Menu.buildFromTemplate([...baseTemplate, {
-        label: "Screens",
-        submenu: screensMenu,
-    }]);
+	const baseTemplate = [
+		{
+			label: app.name,
+			submenu: [{ role: "quit" }],
+		},
+		{
+			label: "Application",
+			submenu: [
+				{
+					label: "About Application",
+					selector: "orderFrontStandardAboutPanel:",
+				},
+				{ type: "separator" },
+				{
+					label: "Quit",
+					accelerator: "Command+Q",
+					click: function () {
+						app.quit();
+					},
+				},
+			],
+		},
+		{
+			label: "Edit",
+			submenu: [
+				{ label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
+				{ label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
+				{ type: "separator" },
+				{ label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+				{ label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+				{ label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+				{
+					label: "Select All",
+					accelerator: "CmdOrCtrl+A",
+					selector: "selectAll:",
+				},
+			],
+		},
+	];
+	const baseMenu = Menu.buildFromTemplate(baseTemplate),
+		menuWithScreens = Menu.buildFromTemplate([
+			...baseTemplate,
+			{
+				label: "Screens",
+				submenu: screensMenu,
+			},
+		]);
 
-    Menu.setApplicationMenu(baseMenu);
+	Menu.setApplicationMenu(baseMenu);
 
-    ipcMain.on("setMenu", (event, menu) => {
-        Menu.setApplicationMenu(menu ? menuWithScreens : baseMenu);
-        if (menu) sendSelectedScreen(checkedId);
-    });
+	ipcMain.on("setMenu", (event, menu) => {
+		Menu.setApplicationMenu(menu ? menuWithScreens : baseMenu);
+		if (menu) sendSelectedScreen(checkedId);
+	});
 };
 
 const createWindow = () => {
@@ -96,7 +102,7 @@ const createWindow = () => {
 	overlayWindow.setIgnoreMouseEvents(true);
 	// ^^ will cause issues; we only want to ignore lcicks
 
-	overlayWindow.loadURL("http://localhost:4000/overlay");
+	//overlayWindow.loadURL("http://localhost:4000/overlay");
 
 	// Open the DevTools.
 	// overlayWindow.webContents.openDevTools();
@@ -131,7 +137,7 @@ const createWindow = () => {
 		mainWindow.setPosition(0, 0);
 	});
 
-    desktopCapturer
+	desktopCapturer
 		.getSources({
 			types: ["window", "screen"],
 		})

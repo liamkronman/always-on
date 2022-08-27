@@ -148,13 +148,6 @@
   font-weight: 500;
 }
 
-.video-container {
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  border-left: 1px solid white;
-}
-
 .left-main-tray {
   display: grid;
   grid-template-rows: 1fr 11fr;

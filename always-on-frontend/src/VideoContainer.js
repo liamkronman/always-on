@@ -28,7 +28,7 @@ function VideoContainer(props) {
 						ref={remoteVideoRef}
 						style={
 							(username === undefined && {
-								position: "absolute",
+								//position: "absolute",
 								opacity: 0,
 								maxHeight: "1px",
 							}) ||

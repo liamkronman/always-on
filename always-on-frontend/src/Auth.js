@@ -26,7 +26,7 @@ function Auth({ setToken }) {
             {
                 displaySignup
                 ? <>
-                    <div className="alwayson-tag">AlwaysOn</div>
+                    <div className="alwayson-tag"><img src="/alwayson-icon.png" /><span>AlwaysOn</span></div>
                     <div className="signup-container">
                         <div></div>
                         <div className="auth-topline">Sign Up</div>

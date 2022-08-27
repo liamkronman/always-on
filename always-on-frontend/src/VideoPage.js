@@ -215,7 +215,6 @@ function VideoPage(props) {
 		<div className="main-container">
 			<div className="left-main-tray">
 				<div className="main-top-left-container">
-					<div className="main-alwayson-title">AlwaysOn</div>
 					<button
 						onClick={() => {
 							localStorage.setItem("accessToken", "");
@@ -225,6 +224,7 @@ function VideoPage(props) {
 					>
 						Log out
 					</button>
+					<div className="main-alwayson-title">AlwaysOn</div>
 				</div>
 				<div className="friend-list-container">
 					<div className="main-search-container">

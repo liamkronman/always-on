@@ -102,7 +102,7 @@ const createWindow = () => {
 	overlayWindow.setIgnoreMouseEvents(true);
 	// ^^ will cause issues; we only want to ignore lcicks
 
-	overlayWindow.loadURL("http://localhost:4000/overlay");
+	overlayWindow.loadURL("https://always-on.vercel.app/overlay");
 
 	// Open the DevTools.
 	// overlayWindow.webContents.openDevTools();
@@ -130,7 +130,7 @@ const createWindow = () => {
 		}
 	});
 
-	mainWindow.loadURL("http://localhost:4000/");
+	mainWindow.loadURL("https://always-on.vercel.app/");
 
 	mainWindow.once("ready-to-show", () => {
 		mainWindow.show();

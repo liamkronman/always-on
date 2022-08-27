@@ -7,6 +7,8 @@ const {
 } = require("electron");
 const path = require("path");
 
+const ELECTRON_SITE = process.env.ELECTRON_SITE || "http://3.211.7.14:3000/";
+
 let availableScreens;
 let mainWindow;
 let overlayWindow;
@@ -102,7 +104,7 @@ const createWindow = () => {
 	overlayWindow.setIgnoreMouseEvents(true);
 	// ^^ will cause issues; we only want to ignore lcicks
 
-	overlayWindow.loadURL("http://localhost:4000/overlay");
+	overlayWindow.loadURL(ELECTRON_SITE + "/overlay");
 
 	// Open the DevTools.
 	// overlayWindow.webContents.openDevTools();
@@ -130,7 +132,7 @@ const createWindow = () => {
 		}
 	});
 
-	mainWindow.loadURL("http://localhost:4000/");
+	mainWindow.loadURL(ELECTRON_SITE);
 
 	mainWindow.once("ready-to-show", () => {
 		mainWindow.show();

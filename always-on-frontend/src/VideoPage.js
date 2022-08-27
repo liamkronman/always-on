@@ -243,7 +243,6 @@ function VideoPage(props) {
 			)
 			.then((resp) => {
 				setSearchedUsers(resp.data.users);
-				console.log(searchedUsers);
 			});
 	}
 
@@ -295,8 +294,21 @@ function VideoPage(props) {
 		setCursorInputLastRefresh(timenow);
 	};
 
-	const handleSearchPress = () => {
-
+	function handleSearchPress(index) {
+		axios.post(`http://${process.env.REACT_APP_BACKEND}/api/user/requestFriend`, {
+			friendUsername: searchedUsers[index].username
+		}, {
+			headers: {
+				"x-access-token": token
+			}
+		})
+		.then(() => {
+			setSearchedUsers(users => {
+				let newUsers = [...users];
+				newUsers[index]["relationStatus"] = "Requested";
+				return newUsers;
+			});
+		})
 	}
 
 	return (
@@ -340,7 +352,15 @@ function VideoPage(props) {
 								return (
 									<div className="searched-user-container">
 										<div className="searched-username">{val.username}</div>
-										<button className="searched-btn follow-searched-btn">Follow</button>
+										{
+											val.relationStatus === "None"
+											? <button className="searched-btn request-searched-btn" onClick={() => handleSearchPress(index)}>Request</button>
+											: val.relationStatus === "Requested"
+											? <button className="searched-btn requested-searched-btn">Requested</button>
+											: val.relationStatus === "Being requested"
+											? <div></div>
+											: <button className="searched-btn friends-searched-btn">Friends</button>
+										}
 									</div>
 								);
 							})}

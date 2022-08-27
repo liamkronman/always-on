@@ -241,11 +241,11 @@
   border-radius: 6px;
 }
 
-.follow-searched-btn {
+.request-searched-btn {
   background: rgb(50, 50, 255);
   color: white;
 }
 
-.follow-searched-btn:hover {
+.request-searched-btn:hover {
   background: rgb(20, 20, 170);
 }

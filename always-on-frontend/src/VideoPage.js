@@ -54,7 +54,11 @@ function VideoPage({ setToken }) {
         window.electronAPI.setMenu(true);
         window.electronAPI.setSize({ width: 1000, height: 750 });
 
-		const peer = new Peer();
+		const peer = new Peer({
+            host: process.env.REACT_APP_BACKEND.split(':')[0],
+            port: +process.env.REACT_APP_BACKEND.split(':')[1] || 80,
+            path: "/peerjs",
+        });
 
 		peer.on("open", (id) => {
 			setPeerId(id);

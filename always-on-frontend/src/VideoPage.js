@@ -52,6 +52,7 @@ function VideoPage({ setToken }) {
 
 	useEffect(() => {
         window.electronAPI.setMenu(true);
+        window.electronAPI.setSize({ width: 1000, height: 750 });
 
 		const peer = new Peer();
 
@@ -63,6 +64,7 @@ function VideoPage({ setToken }) {
 			conn.on("data", (data) => window.electronAPI.setCursorInfo(data))
 		);
 
+        const calls = [];
 		peer.on("call", async (call) => {
 			call.answer(streamRef.current.stream);
 
@@ -70,13 +72,18 @@ function VideoPage({ setToken }) {
                 audioRef.current.srcObject = viewerStream;
                 audioRef.current.autoplay = true;
             });
+
+            calls.push(call);
 		});
 
 		peerInstance.current = peer;
 
 		return () => {
             window.electronAPI.setMenu(false);
+            console.log("Disconnecting...");
+            // for some reason peer.destroy only closes data connections, not calls
             peer.destroy();
+            calls.forEach((call) => call.close());
         };
 	}, []);
 

@@ -16,6 +16,8 @@ function Auth({ setToken }) {
     const loginUsernameRef = useRef();
 
     useEffect(() => {
+        window.electronAPI.setSize({ width: 430, height: 800 });
+
         signupUsernameRef.current.focus();
     }, []);
 

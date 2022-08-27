@@ -1,189 +1,189 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
 
 .App {
-  text-align: center;
-  background: linear-gradient(#4761E9, #46957D);
-  height: 100vh;
-  font-family: 'Space Grotesk', sans-serif;
-  color: white;
-  align-items: center;
-  justify-content: center;
+	text-align: center;
+	background: linear-gradient(#4761e9, #46957d);
+	height: 100vh;
+	font-family: "Space Grotesk", sans-serif;
+	color: white;
+	align-items: center;
+	justify-content: center;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+	height: 40vmin;
+	pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+	.App-logo {
+		animation: App-logo-spin infinite 20s linear;
+	}
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+	background-color: #282c34;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
 }
 
 .App-link {
-  color: #61dafb;
+	color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 .alwayson-tag {
-  position: absolute;
-  left: 15px;
-  top: 15px;
-  color: #E9E9E9;
-  font-size: 18px;
-  font-weight: bold;
+	position: absolute;
+	left: 15px;
+	top: 15px;
+	color: #e9e9e9;
+	font-size: 18px;
+	font-weight: bold;
 }
 
 .login-container {
-  display: grid;
-  grid-template-rows: 1fr 0.5fr 0.5fr 1fr 1fr 1fr 0.25fr;
-  height: 55vh;
-  width: 80vw;
-  align-items: center;
-  margin-left: 10vw;
+	display: grid;
+	grid-template-rows: 1fr 0.5fr 0.5fr 1fr 1fr 1fr 0.25fr;
+	height: 55vh;
+	width: 80vw;
+	align-items: center;
+	margin-left: 10vw;
 }
 
 .signup-container {
-  display: grid;
-  grid-template-rows: 1fr 0.5fr 0.5fr 1fr 1fr 1fr 1fr 1fr 0.25fr;
-  height: 76vh;
-  width: 80vw;
-  align-items: center;
-  margin-left: 10vw;
+	display: grid;
+	grid-template-rows: 1fr 0.5fr 0.5fr 1fr 1fr 1fr 1fr 1fr 0.25fr;
+	height: 76vh;
+	width: 80vw;
+	align-items: center;
+	margin-left: 10vw;
 }
 
 .main-container {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  width: 100vw;
-  height: 100h;
+	display: grid;
+	grid-template-columns: 1fr 3fr;
+	width: 100vw;
+	height: 100h;
 }
 
 .auth-topline {
-  font-weight: bold;
-  font-size: 35px;
+	font-weight: bold;
+	font-size: 35px;
 }
 
 .auth-input-title {
-  font-weight: 500;
-  font-size: 19px;
-  text-align: left;
+	font-weight: 500;
+	font-size: 19px;
+	text-align: left;
 }
 
 .auth-input-container {
-  width: 80vw;
-  justify-content: flex-start;
-  align-items: start;
+	width: 80vw;
+	justify-content: flex-start;
+	align-items: start;
 }
 
 .auth-input-area {
-  -webkit-appearance: none;
-  width: 95%;
-  height: 4.5vh;
-  outline: none;
-  border-radius: 8px;
-  border: 1px solid white;
-  background: #BDCAF8;
-  font-family: 'Space Grotesk', sans-serif;
-  font-style: 400;
-  font-size: 16px;
-  padding-left: 8px;
-  padding-right: 8px;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	-webkit-appearance: none;
+	width: 95%;
+	height: 4.5vh;
+	outline: none;
+	border-radius: 8px;
+	border: 1px solid white;
+	background: #bdcaf8;
+	font-family: "Space Grotesk", sans-serif;
+	font-style: 400;
+	font-size: 16px;
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .auth-submit-btn {
-  -webkit-appearance: none;
-  outline: none;
-  background: #5FC5FF;
-  border-radius: 8px;
-  border: 0 solid white;
-  color: white;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: bold;
-  font-size: 19px;
-  width: 100%;
-  height: 7vh;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	-webkit-appearance: none;
+	outline: none;
+	background: #5fc5ff;
+	border-radius: 8px;
+	border: 0 solid white;
+	color: white;
+	font-family: "Space Grotesk", sans-serif;
+	font-weight: bold;
+	font-size: 19px;
+	width: 100%;
+	height: 7vh;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .auth-submit-btn:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .auth-already-tagline {
-  text-align: start;
-  font-weight: 400;
-  text-decoration: underline;
+	text-align: start;
+	font-weight: 400;
+	text-decoration: underline;
 }
 
 .auth-already-tagline:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .auth-error-msg {
-  color: red;
-  font-weight: 500;
+	color: red;
+	font-weight: 500;
 }
 
 .left-main-tray {
-  display: grid;
-  grid-template-rows: 1fr 11fr;
+	display: grid;
+	grid-template-rows: 1fr 11fr;
 }
 
 .main-alwayson-title {
-  position: relative;
-  left: 2vw;
-  top: 2vh;
-  color: #E9E9E9;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: left;
+	position: absolute;
+	left: 2vw;
+	top: 2vh;
+	color: #e9e9e9;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: left;
 }
 
 .main-top-left-container {
-  border-bottom: 1px solid white;
+	border-bottom: 1px solid white;
+	display: flex;
+	flex-direction: row-reverse;
 }
 
 .main-logout-btn {
-  position: relative;
-  left: 7.5vw;
-  top: 1vh;
-  text-align: right;
-  align-self: flex-end;
-  border: 1px solid black;
-  color: white;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: bold;
-  background: #1612B8;
-  padding-left: 6px;
-  padding-right: 6px;
-  padding-top: 2.5px;
-  padding-bottom: 2.5px;
-  border-radius: 4px;
-  cursor: pointer;
+	text-align: right;
+	align-self: flex-end;
+	border: 1px solid black;
+	color: white;
+	font-family: "Space Grotesk", sans-serif;
+	font-weight: bold;
+	background: #1612b8;
+	padding-left: 6px;
+	padding-right: 6px;
+	padding-top: 2.5px;
+	padding-bottom: 2.5px;
+	border-radius: 4px;
+	cursor: pointer;
+	margin: 4px;
 }
 
 .friend-list-container {
@@ -194,24 +194,24 @@
 }
 
 .main-search-container {
-  width: 100%;
-  height: 4vh;
-  background: #BDCAF8;
-  display: grid;
-  grid-template-columns: 6fr 1fr;
-  border: 1px solid white;
-  border-radius: 6px;
-  justify-content: center;
-  align-items: center;
+	width: 100%;
+	height: 4vh;
+	background: #bdcaf8;
+	display: grid;
+	grid-template-columns: 6fr 1fr;
+	border: 1px solid white;
+	border-radius: 6px;
+	justify-content: center;
+	align-items: center;
 }
 
 .main-search-container > input {
-  background: transparent;
-  border: 0px solid black;
-  outline: none;
-  padding-left: 6px;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 400;
+	background: transparent;
+	border: 0px solid black;
+	outline: none;
+	padding-left: 6px;
+	font-family: "Space Grotesk", sans-serif;
+	font-weight: 400;
 }
 
 .main-search-btn {

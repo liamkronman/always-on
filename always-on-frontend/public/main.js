@@ -104,8 +104,8 @@ const createWindow = () => {
 
 	mainWindow = new BrowserWindow({
 		show: false,
-		width: 800,
-		height: 600,
+		width: 500,
+		height: 800,
 		webPreferences: {
 			preload: path.join(__dirname, "preload.js"),
 		},
@@ -137,7 +137,7 @@ const createWindow = () => {
 			});
 	});
 
-	mainWindow.webContents.openDevTools();
+	// mainWindow.webContents.openDevTools();
 };
 
 app.on("ready", () => {

@@ -16,15 +16,15 @@ const sendSelectedScreen = (item) => {
 };
 
 const createTray = () => {
-    let checkedId = availableScreens[0].id;
+	let checkedId = availableScreens[0].id;
 	const screensMenu = availableScreens.map((item) => {
 		return {
 			label: item.name,
 			click: () => {
 				sendSelectedScreen(item);
 			},
-            type: 'radio',
-            checked: item.id === checkedId
+			type: "radio",
+			checked: item.id === checkedId,
 		};
 	});
 
@@ -73,6 +73,8 @@ const createTray = () => {
 	]);
 
 	Menu.setApplicationMenu(menu);
+
+	app.on("before-quit", () => app.exit());
 };
 
 const createWindow = () => {
@@ -132,7 +134,7 @@ const createWindow = () => {
 			})
 			.then((sources) => {
 				availableScreens = sources;
-                sendSelectedScreen(sources[0]);
+				sendSelectedScreen(sources[0]);
 				createTray();
 			});
 	});

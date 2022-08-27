@@ -346,16 +346,20 @@ function VideoPage(props) {
 							})}
 						</div>
 					)}
-					<FriendGroup groupName="online">
-						{activeFriends.map((val, index) => (
-							<Friend username={val} key={index} />
-						))}
-					</FriendGroup>
-					<FriendGroup groupName="inactive">
-						{inactiveFriends.map((val, index) => (
-							<Friend username={val} key={index} />
-						))}
-					</FriendGroup>
+					{Object.keys(activeFriends).length > 0 && (
+						<FriendGroup groupName="online">
+							{activeFriends.map((val, index) => (
+								<Friend username={val} key={index} />
+							))}
+						</FriendGroup>
+					)}
+					{Object.keys(inactiveFriends).length > 0 && (
+						<FriendGroup groupName="inactive">
+							{inactiveFriends.map((val, index) => (
+								<Friend username={val} key={index} />
+							))}
+						</FriendGroup>
+					)}
 
 					{/* <input
 						type="text"

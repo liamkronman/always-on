@@ -4,7 +4,7 @@ import Peer from "peerjs";
 import axios from "axios";
 import { Search } from "react-feather";
 import VideoContainer from "./VideoContainer";
-import { FriendGroup, Friend } from "./FriendTab";
+import { FriendGroup, Friend, FriendReq } from "./FriendTab";
 
 const TIME_FRESH = 5000;
 const TIME_FADE = 5000;
@@ -360,6 +360,12 @@ function VideoPage(props) {
 							))}
 						</FriendGroup>
 					)}
+					<FriendGroup groupName="pending">
+						<FriendReq username="liam" />
+						<FriendReq username="william" />
+						<FriendReq username="siyong" />
+						<FriendReq username="jerry" />
+					</FriendGroup>
 
 					{/* <input
 						type="text"

@@ -35,9 +35,34 @@
 	background: rgba(217, 217, 217, 0.29);
 }
 
-.online-friend div {
+.online-friend div:first-of-type {
 	font-family: "Space Grotesk";
 	font-style: normal;
 	font-weight: 700;
 	font-size: 20px;
+}
+
+.req-friend {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	border-radius: 8px;
+	padding: 12px 12px;
+}
+
+.req-friend div:first-of-type {
+	font-family: "Space Grotesk";
+	font-style: normal;
+	font-weight: 700;
+	font-size: 20px;
+}
+
+.request-icon {
+	cursor: pointer;
+	padding: 2px;
+	border-radius: 9999px;
+	border: 1px solid transparent;
+}
+.request-icon:hover {
+	background-color: rgba(0, 255, 255, 0.1);
 }

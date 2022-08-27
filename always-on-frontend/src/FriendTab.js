@@ -1,4 +1,5 @@
 import "./FriendTab.css";
+import { Check, X } from "react-feather";
 
 function FriendList(props) {}
 
@@ -20,4 +21,16 @@ function Friend(props) {
 	);
 }
 
-export { FriendGroup, Friend };
+function FriendReq(props) {
+	return (
+		<div className="req-friend">
+			<div>{props.username}</div>
+			<div>
+				<Check color="rgb(150, 255, 150)" size={20} className="request-icon" />
+				<X color="rgb(255, 150, 150)" size={20} className="request-icon" />
+			</div>
+		</div>
+	);
+}
+
+export { FriendGroup, Friend, FriendReq };

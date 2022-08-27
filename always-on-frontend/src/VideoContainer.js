@@ -21,21 +21,21 @@ function VideoContainer(props) {
 				</h1>
 				<div>
 					<video
-						onMouseMove={(event) =>
-							setMyCursorLoc([event.clientX, event.clientY])
-						}
+						onMouseMove={(event) => {
+							setMyCursorLoc([event.clientX, event.clientY]);
+							console.log("Setting cursor locatin");
+						}}
 						onMouseLeave={(event) => setMyCursorLoc(undefined)}
 						ref={remoteVideoRef}
 						style={
 							(username === undefined && {
-								//position: "absolute",
+								position: "absolute",
 								opacity: 0,
 								maxHeight: "1px",
 							}) ||
 							{}
 						}
 					/>
-                    {remoteVideoRef.current && username && <div className="video-shadow" style={{color: 'red', aspectRatio: remoteVideoRef.current.videoWidth/remoteVideoRef.current.videoHeight}} />}
 				</div>
 			</div>
 			<audio ref={audioRef} />

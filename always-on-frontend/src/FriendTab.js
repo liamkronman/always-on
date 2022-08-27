@@ -12,7 +12,13 @@ function FriendGroup(props) {
 
 function Friend(props) {
 	return (
-		<div className="online-friend">
+		<div
+			className={
+				(props.username === props.selectedUser ? "highlighted " : "") +
+				"online-friend "
+			}
+			onClick={props.selectStreamer}
+		>
 			<div>{props.username}</div>
 			{/* <input type="button" value="Join" /> */}
 		</div>

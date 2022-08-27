@@ -35,6 +35,10 @@
 	background: rgba(217, 217, 217, 0.29);
 }
 
+.highlighted {
+	background: rgba(217, 217, 217, 0.29);
+}
+
 .online-friend div:first-of-type {
 	font-family: "Space Grotesk";
 	font-style: normal;

@@ -14,7 +14,7 @@ function VideoContainer(props) {
 				<h1>
 					{(username && `${username}'s stream`) || "Join a friend's stream!"}
 				</h1>
-				{username && (
+				{
 					<div>
 						<video
 							onMouseMove={(event) =>
@@ -24,7 +24,7 @@ function VideoContainer(props) {
 							ref={remoteVideoRef}
 						/>
 					</div>
-				)}
+				}
 			</div>
 			<audio ref={audioRef} />
 		</div>

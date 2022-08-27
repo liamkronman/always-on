@@ -17,7 +17,6 @@ function VideoPage(props) {
 	const removeFriendReqListener = props.removeFriendReqListener;
 	const removeStatusListener = props.removeStatusListener;
 	const [peerId, setPeerId] = useState("");
-	const [remotePeerIdValue, setRemotePeerIdValue] = useState("");
 	const streamRef = useRef({ stream: null });
 	const remoteVideoRef = useRef(null);
 	const peerInstance = useRef(null);
@@ -36,6 +35,7 @@ function VideoPage(props) {
 	const [inactiveFriends, setInactiveFriends] = useState([]);
 	const [searchUsername, setSearchUsername] = useState("");
 	const [searchedUsers, setSearchedUsers] = useState([]);
+	const [selectedUser, setSelectedUser] = useState();
 
 	const getStream = async (screenId) => {
 		try {
@@ -152,7 +152,7 @@ function VideoPage(props) {
 	};
 
 	useEffect(() => {
-		if (cursorConn) {
+		if (cursorConn && remoteVideoRef.current) {
 			const boundingBox = remoteVideoRef.current.getBoundingClientRect();
 			cursorConn.send({
 				user: peerId, // todo: need a better id
@@ -317,6 +317,7 @@ function VideoPage(props) {
 			});
 	}
 
+	/*
 	useEffect(() => {
 		if (searchUsername) {
 			searchForUser();
@@ -324,6 +325,7 @@ function VideoPage(props) {
 			setSearchedUsers([]);
 		}
 	}, [searchUsername]);
+	*/
 
 	function handleRequest(username, accept) {
 		axios
@@ -352,6 +354,31 @@ function VideoPage(props) {
 				});
 			});
 	}
+
+	const selectStreamer = (user) => {
+		console.log("Selected", user);
+		setSelectedUser((prev) => {
+			if (user !== prev) {
+				axios
+					.post(
+						`http://${process.env.REACT_APP_BACKEND}/api/user/getFriendPeerId`,
+						{
+							friendUsername: user,
+						},
+						{
+							headers: {
+								"x-access-token": token,
+							},
+						}
+					)
+					.then((resp) => {
+						console.log(resp.data.friendPeerId);
+						call(resp.data.friendPeerId);
+					});
+			}
+			return prev;
+		});
+	};
 
 	return (
 		<div className="main-container">
@@ -433,7 +460,12 @@ function VideoPage(props) {
 					{activeFriends.length > 0 && (
 						<FriendGroup groupName="online">
 							{activeFriends.map((val, index) => (
-								<Friend username={val} key={index} />
+								<Friend
+									username={val}
+									key={index}
+									selectedUser={selectedUser}
+									selectStreamer={() => selectStreamer(val)}
+								/>
 							))}
 						</FriendGroup>
 					)}

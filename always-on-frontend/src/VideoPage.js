@@ -4,7 +4,7 @@ import Peer from "peerjs";
 import axios from "axios";
 import { Search } from "react-feather";
 import VideoContainer from "./VideoContainer";
-import FriendGroup from "./FriendTab";
+import { FriendGroup, Friend, FriendReq } from "./FriendTab";
 
 const TIME_FRESH = 5000;
 const TIME_FADE = 5000;
@@ -309,7 +309,7 @@ function VideoPage(props) {
 				return newUsers;
 			});
 		})
-	}
+	};
 
 	return (
 		<div className="main-container">
@@ -366,7 +366,26 @@ function VideoPage(props) {
 							})}
 						</div>
 					)}
-					{<FriendGroup groupName="online" />}
+					{Object.keys(activeFriends).length > 0 && (
+						<FriendGroup groupName="online">
+							{activeFriends.map((val, index) => (
+								<Friend username={val} key={index} />
+							))}
+						</FriendGroup>
+					)}
+					{Object.keys(inactiveFriends).length > 0 && (
+						<FriendGroup groupName="inactive">
+							{inactiveFriends.map((val, index) => (
+								<Friend username={val} key={index} />
+							))}
+						</FriendGroup>
+					)}
+					<FriendGroup groupName="pending">
+						<FriendReq username="liam" />
+						<FriendReq username="william" />
+						<FriendReq username="siyong" />
+						<FriendReq username="jerry" />
+					</FriendGroup>
 
 					{/* <input
 						type="text"

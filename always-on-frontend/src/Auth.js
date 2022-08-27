@@ -51,13 +51,13 @@ function Auth({ setToken }) {
                             setSignupErrorMsg("");
                             if (signupUsername && signupEmail && signupPassword && signupConfirmPassword) {
                                 if (signupPassword === signupConfirmPassword) {
-                                    axios.post(`http://${process.env.REACT_APP_BACKEND}/api/auth/signup`, {
+                                    axios.post(`${process.env.REACT_APP_BACKEND}/api/auth/signup`, {
                                         username: signupUsername,
                                         email: signupEmail,
                                         password: signupPassword
                                     })
                                     .then(resp => {
-                                        axios.post(`http://${process.env.REACT_APP_BACKEND}/api/auth/signin`, {
+                                        axios.post(`${process.env.REACT_APP_BACKEND}/api/auth/signin`, {
                                             username: signupUsername,
                                             password: signupPassword
                                         })
@@ -107,7 +107,7 @@ function Auth({ setToken }) {
                     <button className="auth-submit-btn" onClick={() => {
                         setLoginErrorMsg("");
                         if (loginUsername && loginPassword) {
-                            axios.post(`http://${process.env.REACT_APP_BACKEND}/api/auth/signin`, {
+                            axios.post(`${process.env.REACT_APP_BACKEND}/api/auth/signin`, {
                                 username: loginUsername,
                                 password: loginPassword
                             })

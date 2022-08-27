@@ -83,7 +83,7 @@ function VideoPage(props) {
 			setPeerId(id);
 			axios
 				.post(
-					`http://${process.env.REACT_APP_BACKEND}/api/user/setPeerId`,
+					`${process.env.REACT_APP_BACKEND}/api/user/setPeerId`,
 					{
 						peerId: id,
 					},
@@ -232,7 +232,7 @@ function VideoPage(props) {
 	function searchForUser() {
 		axios
 			.post(
-				`http://${process.env.REACT_APP_BACKEND}/api/user/searchUser`,
+				`${process.env.REACT_APP_BACKEND}/api/user/searchUser`,
 				{
 					searchUsername: searchUsername,
 				},
@@ -298,7 +298,7 @@ function VideoPage(props) {
 	function handleSearchPress(index) {
 		axios
 			.post(
-				`http://${process.env.REACT_APP_BACKEND}/api/user/requestFriend`,
+				`${process.env.REACT_APP_BACKEND}/api/user/requestFriend`,
 				{
 					friendUsername: searchedUsers[index].username,
 				},
@@ -330,7 +330,7 @@ function VideoPage(props) {
 	function handleRequest(username, accept) {
 		axios
 			.post(
-				`http://${process.env.REACT_APP_BACKEND}/api/user/handleRequest`,
+				`${process.env.REACT_APP_BACKEND}/api/user/handleRequest`,
 				{
 					potentialFriendUsername: username,
 					accept: accept,
@@ -361,7 +361,7 @@ function VideoPage(props) {
 			if (user !== prev) {
 				axios
 					.post(
-						`http://${process.env.REACT_APP_BACKEND}/api/user/getFriendPeerId`,
+						`${process.env.REACT_APP_BACKEND}/api/user/getFriendPeerId`,
 						{
 							friendUsername: user,
 						},

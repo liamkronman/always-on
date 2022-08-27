@@ -355,7 +355,7 @@ function VideoPage(props) {
 						<div>
 							{searchedUsers.map((val, index) => {
 								return (
-									<div className="searched-user-container">
+									<div className="searched-user-container" key={index}>
 										<div className="searched-username">{val.username}</div>
 										{val.relationStatus === "None" ? (
 											<button

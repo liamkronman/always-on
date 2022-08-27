@@ -98,11 +98,11 @@ function Auth({ setToken }) {
                     <div className="auth-error-msg">{loginErrorMsg}</div>
                     <div className="auth-input-container">
                         <div className="auth-input-title">Username</div>
-                        <input className="auth-input-area" type="text" name="username" placeholder="Set a username." value={loginUsername} ref={loginUsernameRef} onChange={(e) => setLoginUsername(e.target.value)} />
+                        <input className="auth-input-area" type="text" name="username" placeholder="Enter your username." value={loginUsername} ref={loginUsernameRef} onChange={(e) => setLoginUsername(e.target.value)} />
                     </div>
                     <div className="auth-input-container">
                         <div className="auth-input-title">Password</div>
-                        <input className="auth-input-area" type="password" name="password" placeholder="Set a password." value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} />
+                        <input className="auth-input-area" type="password" name="password" placeholder="Enter your password." value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} />
                     </div>
                     <button className="auth-submit-btn" onClick={() => {
                         setLoginErrorMsg("");

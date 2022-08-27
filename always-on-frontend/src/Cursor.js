@@ -5,21 +5,6 @@ import "./Cursor.css";
 
 // Credit to Jacky Zhao: (https://github.com/jackyzha0/cursor-chat) & Figma
 
-export const OtherPlayerCursor = (props) => {
-	const [pc, setPC] = useState();
-	const [point, setPoint] = useState();
-
-	useEffect(
-		() =>
-			setPC((prev) =>
-				prev === undefined ? new PerfectCursor(setPoint) : prev
-			),
-		[]
-	);
-
-	return <PlayerCursor point={point}>Hi</PlayerCursor>;
-};
-
 export const PlayerCursor = (props) => {
 	return (
 		<div
@@ -30,7 +15,8 @@ export const PlayerCursor = (props) => {
 				flexDirection: "column",
 				top: props.point ? props.point[1] : 0,
 				left: props.point ? props.point[0] : 0,
-				zIndex: -2,
+				zIndex: 1,
+				pointerEvents: "none",
 			}}
 			className="playercursor"
 		>
@@ -41,7 +27,6 @@ export const PlayerCursor = (props) => {
 				fillRule="evenodd"
 				width="20"
 				height="30"
-				style={props.isEditingCursor ? { opacity: "0" } : {}}
 			>
 				<g fill="rgba(0,0,0,.2)" transform="translate(1,1)">
 					<path d="m12 24.4219v-16.015l11.591 11.619h-6.781l-.411.124z" />
@@ -57,14 +42,22 @@ export const PlayerCursor = (props) => {
 				</g>
 			</svg>
 			{props.isEditingCursor ? (
-				<p>
-					<Textarea
-						ref={props.myCursorInputRef}
-						spellCheck="false"
-						value={props.cursorInputContent}
-						onChange={(e) => props.setCursorInputContent(e.target.value)}
-					/>
-				</p>
+				<div
+					className={
+						(props.cursorInputContent === "" && "empty ") ||
+						(props.fading && "fading ") ||
+						""
+					}
+				>
+					<p>
+						<Textarea
+							ref={props.myCursorInputRef}
+							spellCheck="false"
+							value={props.cursorInputContent}
+							onChange={(e) => props.setCursorInputContent(e.target.value)}
+						/>
+					</p>
+				</div>
 			) : (
 				props.children && (
 					<div className={props.fading && "fading"}>

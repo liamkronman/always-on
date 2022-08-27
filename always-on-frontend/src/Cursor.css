@@ -142,6 +142,13 @@ html {
 	animation: fading 2s normal infinite;
 }
 
+.empty {
+  opacity: 0;
+}
+.empty:focus-within {
+  opacity: 100;
+}
+
 @keyframes float {
 	0% {
 		transform: translatey(0px);

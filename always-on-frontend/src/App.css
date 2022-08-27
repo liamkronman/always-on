@@ -76,7 +76,7 @@
 	display: grid;
 	grid-template-columns: 1fr 3fr;
 	width: 100%;
-	height: 100h;
+	height: 100vh;
 }
 
 .auth-topline {
@@ -151,6 +151,7 @@
 .left-main-tray {
 	display: grid;
 	grid-template-rows: 1fr 11fr;
+    max-height: 100vh;
 }
 
 .main-alwayson-title {
@@ -190,7 +191,8 @@
 	padding-left: 2vw;
 	padding-right: 2vw;
 	padding-top: 2vh;
-	overflow-y: none;
+	overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .main-search-container {

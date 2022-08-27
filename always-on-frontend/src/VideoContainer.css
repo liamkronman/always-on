@@ -33,7 +33,7 @@
 }
 
 .video-container div {
-	height: 100vh;
+	max-height: 100vh;
 	display: flex;
 
 	flex-direction: column;
@@ -44,7 +44,8 @@
 }
 
 .video-container div div {
-	flex-shrink: 1;
+    overflow-y: auto;
+	flex-grow: 1;
 	height: auto;
 	width: 90%;
 }

@@ -4,6 +4,7 @@ import Peer from "peerjs";
 import axios from "axios";
 import { Search } from "react-feather";
 import VideoContainer from "./VideoContainer";
+import FriendGroup from "./FriendTab";
 
 const TIME_FRESH = 5000;
 const TIME_FADE = 5000;
@@ -343,7 +344,7 @@ function VideoPage(props) {
 							})}
 						</div>
 					)}
-					{friendRequests.length > 0 && <div></div>}
+					{<FriendGroup groupName="online" />}
 
 					{/* <input
 						type="text"

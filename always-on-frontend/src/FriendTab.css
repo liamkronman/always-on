@@ -1,0 +1,7 @@
+.friend-group {
+	display: flex;
+}
+.friend-group > div:first-of-type {
+	text-transform: uppercase;
+	color: lightgray;
+}

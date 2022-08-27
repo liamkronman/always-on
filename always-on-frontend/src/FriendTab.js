@@ -25,7 +25,7 @@ function FriendReq(props) {
 	return (
 		<div className="req-friend">
 			<div>{props.username}</div>
-			<div>
+			<div style={{ minWidth: "52px" }}>
 				<Check color="rgb(150, 255, 150)" size={20} className="request-icon" />
 				<X color="rgb(255, 150, 150)" size={20} className="request-icon" />
 			</div>

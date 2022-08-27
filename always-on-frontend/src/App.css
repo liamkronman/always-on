@@ -190,7 +190,7 @@
 	padding-left: 2vw;
 	padding-right: 2vw;
 	padding-top: 2vh;
-	overflow-y: scroll;
+	overflow-y: none;
 }
 
 .main-search-container {
@@ -220,9 +220,9 @@
 }
 
 .searched-user-container {
-	display: grid;
+	display: flex;
 	grid-template-columns: 1fr 1fr;
-	justify-content: space-evenly;
+	justify-content: space-between;
 	height: 5vh;
 	align-items: center;
 }
@@ -233,19 +233,23 @@
 
 .searched-btn {
 	cursor: pointer;
-  outline: none;
-  border: 0 solid black;
-  font-family: "Space Grotesk", sans-serif;
-  font-weight: 500;
-  height: 3vh;
-  border-radius: 6px;
+	outline: none;
+	border: 0 solid black;
+	font-family: "Space Grotesk", sans-serif;
+	font-weight: 500;
+	height: 3vh;
+	border-radius: 6px;
 }
 
 .request-searched-btn {
-  background: rgb(50, 50, 255);
-  color: white;
+	background: transparent;
+	color: white;
 }
 
 .request-searched-btn:hover {
-  background: rgb(20, 20, 170);
+	background: rgba(150, 255, 255, 0.1);
+}
+
+.free-request-icon {
+	float: right;
 }

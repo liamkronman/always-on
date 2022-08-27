@@ -2,7 +2,7 @@ import { useRef, useEffect, useCallback, useState } from "react";
 import { PlayerCursor } from "./Cursor";
 import Peer from "peerjs";
 import axios from "axios";
-import { Search, Check, X } from "react-feather";
+import { Search, Check, X, Users, Send, Inbox } from "react-feather";
 import VideoContainer from "./VideoContainer";
 import { FriendGroup, Friend, FriendReq } from "./FriendTab";
 
@@ -207,6 +207,7 @@ function VideoPage(props) {
 		addFriendReqListener(friendReqListener);
 
 		const statusListener = ({ type, username }) => {
+			console.log("I have listened to an event!");
 			if (type === "on") {
 				setActiveFriends((friends) => [...friends, username]);
 				setInactiveFriends((friends) =>
@@ -365,9 +366,11 @@ function VideoPage(props) {
 												Request
 											</button>
 										) : val.relationStatus === "Requested" ? (
-											<button className="searched-btn requested-searched-btn">
-												Requested
-											</button>
+											<Inbox
+												color="white"
+												size={20}
+												className="free-request-icon"
+											/>
 										) : val.relationStatus === "Being requested" ? (
 											<div>
 												<Check
@@ -382,9 +385,7 @@ function VideoPage(props) {
 												/>
 											</div>
 										) : (
-											<button className="searched-btn friends-searched-btn">
-												Friends
-											</button>
+											<Users size={20} color="white" />
 										)}
 									</div>
 								);

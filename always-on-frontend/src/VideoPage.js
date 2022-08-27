@@ -323,7 +323,7 @@ function VideoPage(props) {
 		} else {
 			setSearchedUsers([]);
 		}
-	}, [searchForUser]);
+	}, [searchUsername]);
 
 	function handleRequest(username, accept) {
 		axios

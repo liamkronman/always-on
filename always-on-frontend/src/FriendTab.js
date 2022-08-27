@@ -1,6 +1,5 @@
 import "./FriendTab.css";
 import { Check, X } from "react-feather";
-import axios from "axios";
 
 function FriendGroup(props) {
 	return (
@@ -21,7 +20,6 @@ function Friend(props) {
 }
 
 function FriendReq(props) {
-	const token = props.token;
 	const handleRequest = props.handleRequest;
 
 	return (

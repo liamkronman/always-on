@@ -19,17 +19,23 @@ function VideoContainer(props) {
 				<h1>
 					{(username && `${username}'s stream`) || "Join a friend's stream!"}
 				</h1>
-				{username && (
-					<div>
-						<video
-							onMouseMove={(event) =>
-								setMyCursorLoc([event.clientX, event.clientY])
-							}
-							onMouseLeave={(event) => setMyCursorLoc(undefined)}
-							ref={remoteVideoRef}
-						/>
-					</div>
-				)}
+				<div>
+					<video
+						onMouseMove={(event) =>
+							setMyCursorLoc([event.clientX, event.clientY])
+						}
+						onMouseLeave={(event) => setMyCursorLoc(undefined)}
+						ref={remoteVideoRef}
+						style={{
+							position: "absolute",
+							...((username === undefined && {
+								opacity: 0,
+								maxHeight: "1px",
+							}) ||
+								{}),
+						}}
+					/>
+				</div>
 			</div>
 			<audio ref={audioRef} />
 		</div>

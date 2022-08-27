@@ -376,7 +376,7 @@ function VideoPage(props) {
 						call(resp.data.friendPeerId);
 					});
 			}
-			return prev;
+			return user;
 		});
 	};
 

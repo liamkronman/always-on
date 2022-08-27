@@ -316,6 +316,14 @@ function VideoPage(props) {
 			});
 	}
 
+	useEffect(() => {
+		if (searchUsername) {
+			searchForUser();
+		} else {
+			setSearchedUsers([]);
+		}
+	}, [searchUsername])
+
 	return (
 		<div className="main-container">
 			<div className="left-main-tray">

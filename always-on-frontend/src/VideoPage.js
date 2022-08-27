@@ -505,6 +505,8 @@ function VideoPage(props) {
 				setMyCursorLoc={setMyCursorLoc}
 				remoteVideoRef={remoteVideoRef}
 				audioRef={audioRef}
+				username={selectedUser}
+				onLeave={() => setSelectedUser(undefined)}
 			/>
 			<PlayerCursor
 				point={myCursorLoc}

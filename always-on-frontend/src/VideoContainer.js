@@ -8,13 +8,18 @@ function VideoContainer(props) {
 	return (
 		<div className="video-container">
 			{username && (
-				<input className="video-container-leave" type="button" value="Leave" />
+				<input
+					className="video-container-leave"
+					type="button"
+					value="Leave"
+					onClick={props.onLeave}
+				/>
 			)}
 			<div>
 				<h1>
 					{(username && `${username}'s stream`) || "Join a friend's stream!"}
 				</h1>
-				{
+				{username && (
 					<div>
 						<video
 							onMouseMove={(event) =>
@@ -24,7 +29,7 @@ function VideoContainer(props) {
 							ref={remoteVideoRef}
 						/>
 					</div>
-				}
+				)}
 			</div>
 			<audio ref={audioRef} />
 		</div>

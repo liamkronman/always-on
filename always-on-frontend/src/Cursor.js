@@ -30,7 +30,7 @@ export const PlayerCursor = (props) => {
 				flexDirection: "column",
 				top: props.point ? props.point[1] : 0,
 				left: props.point ? props.point[0] : 0,
-				zIndex: -2,
+				zIndex: 10,
 				pointerEvents: "none",
 			}}
 			className={

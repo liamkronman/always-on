@@ -107,7 +107,7 @@ const createWindow = () => {
 	overlayWindow.loadURL(ELECTRON_SITE + "/overlay");
 
 	// Open the DevTools.
-	// overlayWindow.webContents.openDevTools();
+	overlayWindow.webContents.openDevTools();
 
 	// cursor sending
 	ipcMain.on("setCursorInfo", (event, arg) =>

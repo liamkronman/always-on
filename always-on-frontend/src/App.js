@@ -8,11 +8,12 @@ import useSocket from './useSocket';
 
 function App() {
 	const [token, setToken] = useState(null);
-    const { connect } = useSocket();
+    const { connect, addFriendReqListener } = useSocket();
 
 	// check if authenticated on load
 	useEffect(() => {
 		setToken(localStorage.getItem("accessToken"));
+        //addFriendReqListener((username) => alert(username + 'added you'))
 	}, []);
 
     useEffect(() => {

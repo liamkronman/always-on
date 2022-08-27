@@ -83,5 +83,6 @@
     }
   },
   "author": "Siyong Huang, Liam Kronman, William Lin",
-  "description": "AlwaysOn is a desktop app that allows you to share your screen with your friends as long as the app is open."
+  "description": "AlwaysOn is a desktop app that allows you to share your screen with your friends as long as the app is open.",
+  "productName": "AlwaysOn"
 }

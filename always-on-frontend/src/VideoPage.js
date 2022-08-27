@@ -1,8 +1,12 @@
 import { useRef, useEffect, useCallback, useState } from "react";
 import { PlayerCursor } from "./Cursor";
 import Peer from "peerjs";
+import axios from 'axios';
+import { Search } from 'react-feather';
 
-function VideoPage({ setToken }) {
+function VideoPage(props) {
+	const setToken = props.setToken;
+	const token = props.token;
 	const [peerId, setPeerId] = useState("");
 	const [remotePeerIdValue, setRemotePeerIdValue] = useState("");
 	const streamRef = useRef({ stream: null });
@@ -62,6 +66,19 @@ function VideoPage({ setToken }) {
 
 		peer.on("open", (id) => {
 			setPeerId(id);
+			axios.post(`http://${process.env.REACT_APP_BACKEND}/api/user/setPeerId`, {
+				peerId: id
+			}, {
+				headers: {
+					"x-access-token": token
+				}
+			})
+			.then(resp => {
+				console.log("peer id successfully sent to server")
+			})
+			.catch(err => {
+				console.log(err.message);
+			})
 		});
 
 		peer.on("connection", (conn) =>
@@ -155,21 +172,35 @@ function VideoPage({ setToken }) {
 	}, [handleKeyPress]);
 
 	return (
-		<div className="App">
-			<h1>Current user id is {peerId}</h1>
-			<button onClick={() => {
-				localStorage.setItem("accessToken", "");
-				setToken(null);
-			}}>Log out</button> 
-			<input
-				type="text"
-				value={remotePeerIdValue}
-				onChange={(e) => {
-					setRemotePeerIdValue(e.target.value);
-				}}
-			/>
-			<button onClick={() => call(remotePeerIdValue)}>Connect</button>
-			<div>
+		<div className="main-container">
+			<div className="left-main-tray">
+				<div className="main-top-left-container">
+					<div className="main-alwayson-title">
+						AlwaysOn
+					</div>
+					<button onClick={() => {
+						localStorage.setItem("accessToken", "");
+						setToken(null);
+					}} className="main-logout-btn">Log out</button> 
+				</div>
+				<div className="friend-list-container">
+					<div className="main-search-container">
+						<input />
+						<Search color="white" size={20} className="main-search-btn" />
+					</div>
+
+
+					{/* <input
+						type="text"
+						value={remotePeerIdValue}
+						onChange={(e) => {
+							setRemotePeerIdValue(e.target.value);
+						}}
+					/>
+					<button onClick={() => call(remotePeerIdValue)}>Connect</button> */}
+				</div>
+			</div>
+			<div className="video-container">
 				<video
 					onMouseMove={(event) =>
 						setMyCursorLoc([event.clientX, event.clientY])

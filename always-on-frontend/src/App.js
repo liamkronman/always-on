@@ -17,7 +17,7 @@ function App() {
 		<div className="App">
 			{
 				token
-				? <VideoPage setToken={setToken} />
+				? <VideoPage setToken={setToken} token={token} />
 				: <Auth setToken={setToken} />
 			}
 		</div>

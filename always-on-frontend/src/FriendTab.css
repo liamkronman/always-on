@@ -47,14 +47,14 @@
 	flex-direction: row;
 	justify-content: space-between;
 	border-radius: 8px;
-	padding: 12px 12px;
+	padding: 12px 2px;
 }
 
 .req-friend div:first-of-type {
 	font-family: "Space Grotesk";
 	font-style: normal;
-	font-weight: 700;
-	font-size: 20px;
+	font-weight: 400;
+	font-size: 16px;
 }
 
 .request-icon {

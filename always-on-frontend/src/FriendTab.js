@@ -1,7 +1,6 @@
 import "./FriendTab.css";
 import { Check, X } from "react-feather";
-
-function FriendList(props) {}
+import axios from "axios";
 
 function FriendGroup(props) {
 	return (
@@ -22,12 +21,29 @@ function Friend(props) {
 }
 
 function FriendReq(props) {
+	const token = props.token;
+	const handleRequest = props.handleRequest;
+
 	return (
 		<div className="req-friend">
 			<div>{props.username}</div>
 			<div style={{ minWidth: "52px" }}>
-				<Check color="rgb(150, 255, 150)" size={20} className="request-icon" />
-				<X color="rgb(255, 150, 150)" size={20} className="request-icon" />
+				<Check
+					color="rgb(150, 255, 150)"
+					size={20}
+					className="request-icon"
+					onClick={() => {
+						handleRequest(props.username, true);
+					}}
+				/>
+				<X
+					color="rgb(255, 150, 150)"
+					size={20}
+					className="request-icon"
+					onClick={() => {
+						handleRequest(props.username, false);
+					}}
+				/>
 			</div>
 		</div>
 	);

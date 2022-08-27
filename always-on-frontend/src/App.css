@@ -253,3 +253,8 @@
 .free-request-icon {
 	float: right;
 }
+
+.request-icon-container {
+	align-items: center;
+	justify-content: center;
+}

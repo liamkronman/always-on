@@ -323,7 +323,35 @@ function VideoPage(props) {
 		} else {
 			setSearchedUsers([]);
 		}
-	}, [searchUsername])
+	}, [searchForUser]);
+
+	function handleRequest(username, accept) {
+		axios
+			.post(
+				`http://${process.env.REACT_APP_BACKEND}/api/user/handleRequest`,
+				{
+					potentialFriendUsername: username,
+					accept: accept,
+				},
+				{
+					headers: {
+						"x-access-token": token,
+					},
+				}
+			)
+			.then((resp) => {
+				setFriendRequests((friends) =>
+					friends.filter((ele) => ele !== username)
+				);
+				setSearchedUsers((friends) => {
+					return friends.map((val) =>
+						val.username === username
+							? { ...val, relationStatus: "Friends" }
+							: val
+					);
+				});
+			});
+	}
 
 	return (
 		<div className="main-container">
@@ -380,16 +408,18 @@ function VideoPage(props) {
 												className="free-request-icon"
 											/>
 										) : val.relationStatus === "Being requested" ? (
-											<div>
+											<div className="request-icon-container">
 												<Check
 													color="rgb(150, 255, 150)"
 													size={20}
 													className="request-icon"
+													onClick={() => handleRequest(val.username, true)}
 												/>
 												<X
 													color="rgb(255, 150, 150)"
 													size={20}
 													className="request-icon"
+													onClick={() => handleRequest(val.username, false)}
 												/>
 											</div>
 										) : (
@@ -418,7 +448,13 @@ function VideoPage(props) {
 						<FriendGroup groupName="pending">
 							{friendRequests.map((val, index) => {
 								console.log(val);
-								return <FriendReq username={val} key={index} />;
+								return (
+									<FriendReq
+										username={val}
+										key={index}
+										handleRequest={handleRequest}
+									/>
+								);
 							})}
 						</FriendGroup>
 					)}

@@ -4,7 +4,7 @@ import Peer from "peerjs";
 import axios from "axios";
 import { Search } from "react-feather";
 import VideoContainer from "./VideoContainer";
-import FriendGroup from "./FriendTab";
+import { FriendGroup, Friend } from "./FriendTab";
 
 const TIME_FRESH = 5000;
 const TIME_FADE = 5000;
@@ -295,9 +295,7 @@ function VideoPage(props) {
 		setCursorInputLastRefresh(timenow);
 	};
 
-	const handleSearchPress = () => {
-
-	}
+	const handleSearchPress = () => {};
 
 	return (
 		<div className="main-container">
@@ -340,13 +338,21 @@ function VideoPage(props) {
 								return (
 									<div className="searched-user-container">
 										<div className="searched-username">{val.username}</div>
-										<button className="searched-btn follow-searched-btn">Follow</button>
+										<button className="searched-btn follow-searched-btn">
+											Follow
+										</button>
 									</div>
 								);
 							})}
 						</div>
 					)}
-					{<FriendGroup groupName="online" />}
+					{
+						<FriendGroup groupName="online">
+							<Friend username="william" />
+							<Friend username="liam" />
+							<Friend username="siyong" />
+						</FriendGroup>
+					}
 
 					{/* <input
 						type="text"

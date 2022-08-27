@@ -1,7 +1,43 @@
 .friend-group {
+	padding-top: 20px;
 	display: flex;
+	flex-direction: column;
+	text-align: left;
+	gap: 8px;
 }
+
 .friend-group > div:first-of-type {
 	text-transform: uppercase;
-	color: lightgray;
+	position: relative;
+	/*left: -1vw;*/
+	color: #99afff;
+}
+.friend-group > div:first-of-type:before {
+	content: attr(count);
+	float: right;
+	text-align: right;
+}
+
+.friend-group > div:not(:first-of-type) {
+	color: white;
+}
+
+.online-friend {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	border-radius: 8px;
+	padding: 12px 12px;
+	cursor: pointer;
+}
+
+.online-friend:hover {
+	background: rgba(217, 217, 217, 0.29);
+}
+
+.online-friend div {
+	font-family: "Space Grotesk";
+	font-style: normal;
+	font-weight: 700;
+	font-size: 20px;
 }

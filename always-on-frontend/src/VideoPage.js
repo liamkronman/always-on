@@ -232,8 +232,8 @@ function VideoPage(props) {
 						<div>
 							{searchedUsers.map((val, index) => {
 								return (
-									<div>
-										{val.username}
+									<div className="searched-user-container">
+										<div>{val.username}</div>
 									</div>);
 							})}
 						</div>

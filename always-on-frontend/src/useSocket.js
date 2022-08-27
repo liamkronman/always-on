@@ -7,11 +7,12 @@ export default function useSocket() {
     const socket = useRef(null);
     const friendReqListeners = useRef([]);
     const statusListeners = useRef([]);
+    const connectListeners = useRef([]);
     const connect = useCallback((token) => {
         if (socket.current) socket.current.close();
         if (!token) return;
         socket.current = io(process.env.REACT_APP_BACKEND.split('://')[1], { query: { token } });
-        socket.current.on('connect', () => console.log('socket connected!'));
+        socket.current.on('connect', () => connectListeners.current.forEach((cb) => cb()));
         socket.current.on('disconnect', () => console.log('socket disconnected!'));
         socket.current.on('friendReq', (data) => {
             friendReqListeners.current.forEach((listener) => listener(data));
@@ -32,5 +33,11 @@ export default function useSocket() {
     const removeStatusListener = useCallback((callback) => {
         statusListeners.current.splice(statusListeners.current.indexOf(callback), 1);
     }, []);
-    return { connect, addFriendReqListener, removeFriendReqListener, addStatusListener, removeStatusListener };
+    const addConnectListener = useCallback((callback) => {
+        connectListeners.current.push(callback);
+    } ,[]);
+    const removeConnectListener = useCallback((callback) => {
+        connectListeners.current.splice(connectListeners.current.indexOf(callback), 1);
+    } ,[]);
+    return { connect, addFriendReqListener, removeFriendReqListener, addStatusListener, removeStatusListener, addConnectListener, removeConnectListener };
 }

@@ -5,7 +5,6 @@ import VideoPage from './VideoPage';
 import { useEffect, useState } from "react";
 import Auth from './Auth';
 import useSocket from './useSocket';
-require('dotenv').config();
 
 function App() {
 	const [token, setToken] = useState(null);

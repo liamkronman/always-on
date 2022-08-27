@@ -187,10 +187,10 @@
 }
 
 .friend-list-container {
-  padding-left: 2vw;
-  padding-right: 2vw;
-  padding-top: 2vh;
-  overflow-y: scroll;
+	padding-left: 2vw;
+	padding-right: 2vw;
+	padding-top: 2vh;
+	overflow-y: scroll;
 }
 
 .main-search-container {
@@ -207,7 +207,8 @@
 
 .main-search-container > input {
 	background: transparent;
-	border: 0px solid black;
+	min-width: 1vw;
+	border: none;
 	outline: none;
 	padding-left: 6px;
 	font-family: "Space Grotesk", sans-serif;
@@ -215,21 +216,21 @@
 }
 
 .main-search-btn {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .searched-user-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-content: space-evenly;
-  height: 5vh;
-  align-items: center;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	justify-content: space-evenly;
+	height: 5vh;
+	align-items: center;
 }
 
 .searched-username {
-  text-align: left;
+	text-align: left;
 }
 
 .searched-btn {
-  cursor: pointer;
+	cursor: pointer;
 }

@@ -129,16 +129,16 @@ const createWindow = () => {
 	mainWindow.once("ready-to-show", () => {
 		mainWindow.show();
 		mainWindow.setPosition(0, 0);
-
-		desktopCapturer
-			.getSources({
-				types: ["window", "screen"],
-			})
-			.then((sources) => {
-				availableScreens = sources;
-				createTray();
-			});
 	});
+
+    desktopCapturer
+		.getSources({
+			types: ["window", "screen"],
+		})
+		.then((sources) => {
+			availableScreens = sources;
+			createTray();
+		});
 
 	// mainWindow.webContents.openDevTools();
 };

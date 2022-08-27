@@ -230,6 +230,10 @@ function VideoPage(props) {
 			});
 	}
 
+	const handleSearchPress = () => {
+
+	}
+
 	return (
 		<div className="main-container">
 			<div className="left-main-tray">
@@ -271,7 +275,7 @@ function VideoPage(props) {
 								return (
 									<div className="searched-user-container">
 										<div className="searched-username">{val.username}</div>
-										<button className="searched-btn follow-searched-btn">Follow</button>
+										<button className="searched-btn follow-searched-btn" onClick={handleSearchPress}>Request</button>
 									</div>
 								);
 							})}

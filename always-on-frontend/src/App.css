@@ -233,4 +233,19 @@
 
 .searched-btn {
 	cursor: pointer;
+  outline: none;
+  border: 0 solid black;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 500;
+  height: 3vh;
+  border-radius: 6px;
+}
+
+.follow-searched-btn {
+  background: rgb(50, 50, 255);
+  color: white;
+}
+
+.follow-searched-btn:hover {
+  background: rgb(20, 20, 170);
 }

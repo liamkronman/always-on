@@ -56,6 +56,15 @@
 
 .login-container {
   display: grid;
+  grid-template-rows: 1fr 0.5fr 0.5fr 1fr 1fr 1fr 0.25fr;
+  height: 55vh;
+  width: 80vw;
+  align-items: center;
+  margin-left: 10vw;
+}
+
+.signup-container {
+  display: grid;
   grid-template-rows: 1fr 0.5fr 0.5fr 1fr 1fr 1fr 1fr 1fr 0.25fr;
   height: 76vh;
   width: 80vw;

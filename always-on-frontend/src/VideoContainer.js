@@ -35,6 +35,7 @@ function VideoContainer(props) {
 							{}
 						}
 					/>
+                    {remoteVideoRef.current && username && <div className="video-shadow" style={{color: 'red', aspectRatio: remoteVideoRef.current.videoWidth/remoteVideoRef.current.videoHeight}} />}
 				</div>
 			</div>
 			<audio ref={audioRef} />

@@ -21,23 +21,35 @@ const createTray = () => {
 		return {
 			label: item.name,
 			click: () => {
+<<<<<<< Updated upstream
 				sendSelectedScreen(item);
+=======
+				sendSelectedScreen(item.id);
+				checkedId = item.id;
+>>>>>>> Stashed changes
 			},
             type: 'radio',
             checked: item.id === checkedId
 		};
 	});
 
+<<<<<<< Updated upstream
 	const menu = Menu.buildFromTemplate([
+=======
+	const baseTemplate = [
+>>>>>>> Stashed changes
 		{
 			label: app.name,
 			submenu: [{ role: "quit" }],
 		},
 		{
+<<<<<<< Updated upstream
 			label: "Screens",
 			submenu: screensMenu,
 		},
 		{
+=======
+>>>>>>> Stashed changes
 			label: "Application",
 			submenu: [
 				{
@@ -70,9 +82,28 @@ const createTray = () => {
 				},
 			],
 		},
+<<<<<<< Updated upstream
 	]);
 
 	Menu.setApplicationMenu(menu);
+=======
+	];
+	const baseMenu = Menu.buildFromTemplate(baseTemplate),
+		menuWithScreens = Menu.buildFromTemplate([
+			...baseTemplate,
+			{
+				label: "Screens",
+				submenu: screensMenu,
+			},
+		]);
+
+	Menu.setApplicationMenu(baseMenu);
+
+	ipcMain.on("setMenu", (event, menu) => {
+		Menu.setApplicationMenu(menu ? menuWithScreens : baseMenu);
+		if (menu) sendSelectedScreen(checkedId);
+	});
+>>>>>>> Stashed changes
 };
 
 const createWindow = () => {
@@ -126,6 +157,7 @@ const createWindow = () => {
 		mainWindow.show();
 		mainWindow.setPosition(0, 0);
 
+<<<<<<< Updated upstream
 		desktopCapturer
 			.getSources({
 				types: ["window", "screen"],
@@ -136,6 +168,16 @@ const createWindow = () => {
 				createTray();
 			});
 	});
+=======
+	desktopCapturer
+		.getSources({
+			types: ["window", "screen"],
+		})
+		.then((sources) => {
+			availableScreens = sources;
+			createTray();
+		});
+>>>>>>> Stashed changes
 
 	mainWindow.webContents.openDevTools();
 };

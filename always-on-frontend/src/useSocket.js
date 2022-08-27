@@ -7,6 +7,7 @@ export default function useSocket() {
     const socket = useRef(null);
     const friendReqListeners = useRef([]);
     const statusListeners = useRef([]);
+    const connectListeners = useRef([]);
     const connect = useCallback((token) => {
         if (socket.current) socket.current.close();
         if (!token) return;
@@ -32,5 +33,11 @@ export default function useSocket() {
     const removeStatusListener = useCallback((callback) => {
         statusListeners.current.splice(statusListeners.current.indexOf(callback), 1);
     }, []);
-    return { connect, addFriendReqListener, removeFriendReqListener, addStatusListener, removeStatusListener };
+    const addConnectListener = useCallback((callback) => {
+        connectListeners.current.push(callback);
+    } ,[]);
+    const removeConnectListener = useCallback((callback) => {
+        connectListeners.current.splice(connectListeners.current.indexOf(callback), 1);
+    } ,[]);
+    return { connect, addFriendReqListener, removeFriendReqListener, addStatusListener, removeStatusListener, addConnectListener, removeConnectListener };
 }

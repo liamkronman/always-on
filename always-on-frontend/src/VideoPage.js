@@ -14,8 +14,10 @@ function VideoPage(props) {
 	const token = props.token;
 	const addFriendReqListener = props.addFriendReqListener;
 	const addStatusListener = props.addStatusListener;
+    const addConnectListener = props.addConnectListener;
 	const removeFriendReqListener = props.removeFriendReqListener;
 	const removeStatusListener = props.removeStatusListener;
+    const removeConnectListener = props.removeConnectListener;
 	const [peerId, setPeerId] = useState("");
 	const streamRef = useRef({ stream: null });
 	const remoteVideoRef = useRef(null);
@@ -202,9 +204,16 @@ function VideoPage(props) {
 	}, [cursorInputContent, handleKeyPress]);
 
 	useEffect(() => {
+        const connectListener = () => {
+            setActiveFriends([]);
+            setInactiveFriends([]);
+            setFriendRequests([]);
+        };
+
 		const friendReqListener = (username) =>
 			setFriendRequests((friendReqs) => [...friendReqs, username]);
 		addFriendReqListener(friendReqListener);
+        addConnectListener(connectListener);
 
 		const statusListener = ({ type, username }) => {
 			console.log("I have listened to an event!");
@@ -226,6 +235,7 @@ function VideoPage(props) {
 		return () => {
 			removeFriendReqListener(friendReqListener);
 			removeStatusListener(statusListener);
+            removeConnectListener(connectListener);
 		};
 	}, []);
 

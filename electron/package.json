@@ -20,7 +20,18 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon": "./build/icon.png"
+        "icon": "./build/icon.png",
+        "osxSign": {
+          "identity": "Developer ID Application: Liam Kronman (ATG98K5UYN)",
+          "hardened-runtime": true,
+          "entitlements": "entitlements.plist",
+          "entitlements-inherit": "entitlements.plist",
+          "signature-flags": "library"
+        },
+        "osxNotarize": {
+          "appleId": "liam@liamkronman.com",
+          "appleIdPassword": "nmia-fgbz-grwz-jyan"
+        }
       },
       "makers": [
         {

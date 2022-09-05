@@ -4,8 +4,10 @@ const {
 	desktopCapturer,
 	ipcMain,
 	Menu,
+	systemPreferences
 } = require("electron");
 const path = require("path");
+const microphone = systemPreferences.askForMediaAccess('microphone');
 
 const ELECTRON_SITE = process.env.ELECTRON_SITE || "https://always-on.vercel.app";
 

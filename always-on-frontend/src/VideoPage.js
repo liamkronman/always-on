@@ -145,6 +145,10 @@ function VideoPage(props) {
 				remoteVideoRef.current.autoplay = true;
 			});
 
+			call.on("close", () => {
+				remoteVideoRef.current.srcObject = null;
+			});
+
 			setMediaConn(call);
 
 			setCursorConn(peerInstance.current.connect(remotePeerId));

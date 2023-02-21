@@ -526,6 +526,7 @@ function VideoPage(props) {
 				onLeave={() => {
 					setSelectedUser(undefined)
 					remoteVideoRef.current.srcObject = null;
+					audioRef.current.srcObject = null;
 				}}
 			/>
 			<PlayerCursor
